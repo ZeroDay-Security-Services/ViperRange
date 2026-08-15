@@ -1,419 +1,236 @@
-# ViperRange — Ephemeral Cyber Labs
+<div align="center">
 
-> **Built by [ZeroDay Security Services](https://zeroday.in) · Siliguri, West Bengal, India**
-
-```
-╔══════════════════════════════════════════════════════╗
-║  VIPERRANGE  ·  Ephemeral Cyber Labs                 ║
-║  ZeroDay Security Services                           ║
-╚══════════════════════════════════════════════════════╝
-```
-
-A production-grade, flag-submission cyber range platform with 39 original hands-on
-labs across Web Exploitation, Cryptography, Forensics, Linux, Binary Exploitation,
-Reverse Engineering, and OSINT. Deployable labs spin up isolated Docker containers
-on Render in under 2 minutes; offline labs ship as downloadable challenge artifacts.
-Every lab ends the same way — find the flag, submit it, earn points.
+# ⚡ VIPERRANGE
+### Enterprise-Grade Ephemeral Cyber Range & CTF Training Infrastructure
+**Engineered by ZeroDay Security Services**
 
 ---
 
-## Architecture
+[![Next.js](https://img.shields.io/badge/Next.js-14.2-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.4-blue?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
+[![Docker](https://img.shields.io/badge/Docker-Containers-2496ED?style=for-the-badge&logo=docker)](https://www.docker.com/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-336791?style=for-the-badge&logo=postgresql)](https://www.postgresql.org/)
+[![Prisma](https://img.shields.io/badge/Prisma-ORM-2D3748?style=for-the-badge&logo=prisma)](https://www.prisma.io/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
+</div>
+
+---
+
+## 📌 Overview
+
+**ViperRange** is a production-ready, full-stack cyber security training and range platform designed for offensive security research, red team training, and CTF competitions. 
+
+It provides an enterprise web platform paired with **39 original, realistic hands-on challenges** spanning Web Exploitation, Cryptography, Digital Forensics, Linux Privilege Escalation, Binary Exploitation (Pwn), Reverse Engineering, and Open-Source Intelligence (OSINT).
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│  Vercel (Next.js — Frontend + API Routes)                │
-│  ┌─────────────┐  ┌─────────────┐  ┌─────────────────┐  │
-│  │  Dashboard  │  │  Auth.js    │  │  Flag Submission │  │
-│  │  (React)    │  │  (JWT)      │  │  /api/labs/*     │  │
-│  └─────────────┘  └─────────────┘  └────────┬──────────┘  │
-└──────────────────────────────────────────────┼────────────┘
-                                                │ Render REST API v1
-┌──────────────────────────────────────────────▼────────────┐
-│  Render (Deployable Web Labs — 8 of 39)                    │
-│  File Oracle · Pixel Cache · Crawler Protocol · ...        │
-└──────────────────────────────────────────────────────────┘
-         │
-┌────────▼──────────────────────────────────┐
-│  Neon PostgreSQL (free tier)               │
-│  Users · Labs · Submissions · Completions  │
-└─────────────────────────────────────────────┘
+┌────────────────────────────────────────────────────────────────────────┐
+│                          VIPERRANGE ARCHITECTURE                       │
+├────────────────────────────────────────────────────────────────────────┤
+│                                                                        │
+│   [ Client Browser ]                                                   │
+│           │                                                            │
+│           ▼                                                            │
+│   ┌─────────────────────────────────────────────────────────────┐      │
+│   │ Next.js 14 Web Application (Edge / Serverless Runtime)      │      │
+│   │ ├── Dashboard UI (React 18 + Tailwind CSS + Framer Motion) │      │
+│   │ ├── NextAuth.js JWT Session Gatekeeper                      │      │
+│   │ ├── Constant-Time SHA-256 Flag Verification Pipeline        │      │
+│   │ └── RESTful APIs (/api/labs, /api/deployments, /api/logs)   │      │
+│   └──────────────────────────────┬──────────────────────────────┘      │
+│                                  │                                     │
+│            ┌─────────────────────┴─────────────────────┐               │
+│            ▼                                           ▼               │
+│   ┌─────────────────────────────┐   ┌─────────────────────────────┐    │
+│   │ PostgreSQL Database         │   │ Target Range Infrastructure │    │
+│   │ ├── Users & Profiles        │   │ ├── Docker Bridge Network   │    │
+│   │ ├── 39 Lab Scenarios        │   │ ├── 8 Deployable Containers │    │
+│   │ ├── Submissions & Flags     │   │ └── On-Demand Ephemeral Pods│    │
+│   │ └── Real-time Telemetry     │   │                             │    │
+│   └─────────────────────────────┘   └─────────────────────────────┘    │
+│                                                                        │
+└────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## The Lab Catalog
+## 🎯 Lab & Challenge Ecosystem (39 Modules)
 
-| Category | Count | Type |
-|---|---|---|
-| Web Exploitation | 8 | Deployable (live Docker environment per lab) |
-| Cryptography | 7 | Offline (downloadable artifacts) |
-| Forensics | 5 | Offline |
-| Linux | 3 | Offline |
-| Binary Exploitation (Pwn) | 6 | Offline |
-| Reverse Engineering | 5 | Offline |
-| OSINT | 3 | Offline (fully synthetic, fictional scenarios) |
-| Miscellaneous | 2 | Offline |
-| **Total** | **39** | |
+ViperRange features **39 unique, independently authored scenarios** categorized into dynamic deployable containers and downloadable offline challenges:
 
-Every lab — deployable or offline — is a genuine, independently solvable
-challenge with a unique `VR{...}` flag. Flags are never exposed client-side;
-submission is validated server-side against a SHA-256 hash.
+### 1. 🌐 Web Exploitation (8 Deployable Docker Targets)
+Each lab deploys into an isolated container running on designated ports:
+* **File Oracle (`:8081`)** — Chained Local File Inclusion (LFI via `php://filter`) to Remote Code Execution.
+* **Pixel Cache (`:8082`)** — Information disclosure via generated stylesheet build metadata.
+* **Crawler Protocol (`:8083`)** — Search engine exclusion policy bypass and hidden archive traversal.
+* **Session Architect (`:8084`)** — Base64-encoded cookie manipulation and privilege escalation.
+* **Cipher Gate (`:8085`)** — Client-side JavaScript array rotation and string obfuscation deconstruction.
+* **Loose Types (`:8086`)** — PHP `extract($_GET)` variable injection and execution override.
+* **Template Engine (`:8087`)** — Python Tornado Server-Side Template Injection (SSTI) and HMAC cookie signing.
+* **Style Injector (`:8088`)** — CSS attribute-selector side-channel exfiltration and prefix binary search.
+
+### 2. 🔐 Cryptography (7 Offline Challenges)
+* Wiener’s attack on small private exponent RSA.
+* Bit-shifting arithmetic and substitution cipher analysis.
+* AES-CBC initialization vector nonce reuse and key reconstruction.
+* Discrete logarithm computation and Diffie-Hellman parameter flaws.
+
+### 3. 🔍 Digital Forensics & Analysis (5 Offline Challenges)
+* PCAP network stream packet carving and raw protocol extraction.
+* Volatility memory dump analysis, process tree reconstruction, and mutex extraction.
+* LSB Steganography and metadata carving across multi-layer media.
+
+### 4. 🐧 Linux Internals & Privilege Escalation (3 Offline Challenges)
+* SUID binary path hijacking and environment variable manipulation.
+* Wildcard injection attacks against automated administrative cron jobs.
+* Writable systemd service units and Linux permission auditing.
+
+### 5. 💥 Binary Exploitation (6 Offline Challenges)
+* Stack buffer overflow and instruction pointer control (`ret2win`).
+* Format string vulnerabilities and arbitrary memory read/write primitives.
+* ROP (Return-Oriented Programming) chain construction and NX bypass.
+
+### 6. ⚙ Reverse Engineering (5 Offline Challenges)
+* Keygen matrix reversing and assembly deobfuscation.
+* Bytecode disassembly and anti-debugging evasion.
+* Packed executable analysis and runtime binary reconstruction.
+
+### 7. 📡 Synthetic OSINT & Misc (5 Challenges)
+* Completely synthetic, privacy-safe intelligence trails and digital artifact correlation.
+* Custom esoteric VM architectures and Git history vulnerability extraction.
 
 ---
 
-## Tech Stack
+## 🛠 Technology Stack
 
-| Layer | Technology |
-|-------|-----------|
-| Frontend | Next.js 14, React 18, Tailwind CSS, Framer Motion |
-| Backend | Next.js Route Handlers (serverless) |
-| Auth | Auth.js v5 (NextAuth), bcrypt, JWT |
-| Database | PostgreSQL via Neon (free tier) + Prisma ORM |
-| Deployable Lab Hosting | Render Web Services (Docker containers) |
-| Rate Limiting | Upstash Redis (free) · in-memory fallback |
-| CI/CD | GitHub Actions → Vercel |
-| Testing | Jest + Testing Library + Playwright |
+| Domain | Technologies |
+|---|---|
+| **Frontend Platform** | Next.js 14 (App Router), React 18, Tailwind CSS, Lucide Icons |
+| **Backend Engine** | Next.js Edge / Node.js Route Handlers, TypeScript 5.4 |
+| **Authentication** | Auth.js v5 (NextAuth), Argon2 / Bcrypt password hashing, JWT |
+| **Database & ORM** | PostgreSQL 16, Prisma ORM, Connection Pooling |
+| **Containerization** | Docker, Docker Compose, Alpine & Debian Slim Multi-stage Builds |
+| **Testing Suite** | Jest, Playwright E2E, Supertest, Unit Validation Matrix |
 
 ---
 
-## Quick Start (Local Development)
+## 🚀 Quick Start & Installation
 
 ### Prerequisites
-- Node.js 20+
-- npm 9+
-- PostgreSQL (or a [Neon](https://neon.tech) free-tier account)
+* **Node.js**: `v20.x` or later
+* **Docker Engine & Docker Compose**: `v24.x` or later
+* **PostgreSQL**: Local instance or cloud database
 
-### 1. Clone and install
-
+### 1. Clone Repository
 ```bash
-git clone https://github.com/zeroday-security/viperrange.git
-cd viperrange
-npm install
+git clone https://github.com/ZeroDay-Security-Services/ViperRange.git
+cd ViperRange
 ```
 
-### 2. Configure environment
-
+### 2. Environment Setup
+Create a `.env` file based on `.env.example`:
 ```bash
-cp .env.example .env.local
+cp .env.example .env
 ```
 
-Fill in `.env.local` — at minimum:
-
+Configure your environment variables:
 ```env
-DATABASE_URL="postgresql://user:pass@host/viperrange?sslmode=require"
-AUTH_SECRET="run: openssl rand -base64 32"
-RENDER_API_KEY=development_bypass   # Use this for local dev — no Render account needed
+DATABASE_URL="postgresql://postgres:postgres@localhost:5433/viperrange?schema=public"
+AUTH_SECRET="your-32-char-random-generated-secret"
+LOCAL_LABS_ENABLED="true"
+NEXT_PUBLIC_APP_URL="http://localhost:3001"
 ```
 
-### 3. Set up the database
+### 3. Full-Stack Docker Deployment (Recommended)
+Launch the entire platform (Next.js Application + PostgreSQL + 8 Vulnerable Target Labs) with a single command:
 
 ```bash
-npm run db:migrate    # Creates tables
-npm run db:seed       # Seeds all 39 labs, walkthroughs, and demo accounts
-```
-
-### 4. Start the dev server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000)
-
-**Demo credentials:**
-- Student: `student@demo.com` / `Student@Demo2024!`
-- Admin: `admin@zeroday.in` / `Admin@ZeroDay2024!`
-
----
-
-## Environment Variables
-
-| Variable | Required | Description |
-|----------|----------|-------------|
-| `DATABASE_URL` | ✅ | PostgreSQL connection string (Neon recommended) |
-| `AUTH_SECRET` | ✅ | 32-character random secret for JWT signing |
-| `RENDER_API_KEY` | ✅ | Render API key. Use `development_bypass` for local dev |
-| `RENDER_OWNER_ID` | ✅ (prod) | Your Render account owner ID |
-| `LOCAL_LABS_ENABLED` | ⬜ | Set to `true` to route dev labs to local Docker containers |
-| `ADMIN_EMAILS` | ✅ | Comma-separated admin email addresses |
-| `UPSTASH_REDIS_REST_URL` | ⬜ | Upstash Redis for production rate limiting |
-| `UPSTASH_REDIS_REST_TOKEN` | ⬜ | Upstash Redis token |
-| `NEXT_PUBLIC_APP_URL` | ⬜ | Your deployment URL |
-
----
-
-## Running Vulnerable Labs Locally (Docker)
-
-To run the actual vulnerable deployable web lab containers on your local machine:
-
-```bash
-# Start all 8 deployable lab containers
-npm run labs:up
-
-# View live container logs
-npm run labs:logs
-
-# Stop all lab containers
-npm run labs:down
-```
-
-When `LOCAL_LABS_ENABLED=true` is set in `.env.local`, clicking **"Start Lab"** on the dashboard will automatically connect directly to the running local container:
-
-| Lab | Port | Vulnerability |
-|---|---|---|
-| File Oracle | `http://localhost:8081` | LFI to RCE |
-| Pixel Cache | `http://localhost:8082` | Web Cache Deception |
-| Crawler Protocol | `http://localhost:8083` | robots.txt & Path Traversal |
-| Session Architect | `http://localhost:8084` | Session Token / Weak MAC |
-| Cipher Gate | `http://localhost:8085` | Client-side Obfuscation / JS Cracking |
-| Loose Types | `http://localhost:8086` | PHP Type Juggling & `extract()` |
-| Template Engine | `http://localhost:8087` | Server-Side Template Injection (SSTI) |
-| Style Injector | `http://localhost:8088` | CSS Injection / Exfiltration |
-
----
-
-## Docker (Local Full Stack)
-
-```bash
+# 1. Start core platform and database
 docker compose up -d --build
+
+# 2. Synchronize database schema and seed all 39 labs
 docker compose exec app npx prisma db push
-docker compose exec app npm run db:seed
+docker compose exec app node prisma/seed.js
+
+# 3. Start all 8 deployable target lab containers
+docker compose -f docker-compose.labs.yml up -d --build
 ```
 
-The app is served on `http://localhost:3001` (mapped from the container's internal port 3000).
+Access the live services:
+- **ViperRange Platform**: `http://localhost:3001`
+- **Target Labs**: Ports `8081` through `8088`
 
 ---
 
-## Building & Deploying Lab Images
+## 🔒 Security Model & Flag Verification Architecture
 
-Every deployable lab lives under `labs/<slug>/` with its own Dockerfile and
-source. Build and push all eight images in one step:
+Every challenge on ViperRange implements strict security and validation standards:
 
-```bash
-cd labs
-REGISTRY=yourorg ./build.sh --push
-```
-
-Update `dockerImage` in `prisma/seed.ts` to match your registry namespace,
-then re-run `npm run db:seed`.
+1. **Zero Client-Side Leakage**: Plaintext flags are never transmitted to or stored in client bundles.
+2. **Cryptographic Verification**: Flag submissions are checked server-side using **SHA-256 constant-time comparison** (`crypto.timingSafeEqual`) to prevent timing side-channel attacks.
+3. **Atomic Transactions**: Successful solves record completions, award points, and log audit trails in single ACID transactions (`prisma.$transaction`).
+4. **Anti-Replay**: Duplicate submissions for previously solved challenges are rejected without double-crediting points.
 
 ---
 
-## Vercel Deployment
-
-1. Push to GitHub
-2. Import project at [vercel.com/new](https://vercel.com/new)
-3. Set environment variables in Vercel dashboard
-4. Deploy
-
----
-
-## Render Deployment
-
-### Option A: render.yaml (recommended)
-
-```bash
-npm i -g @render.com/cli
-render deploy
-```
-
-### Option B: Manual
-
-1. Create a new Web Service on Render
-2. Connect your GitHub repo
-3. Build command: `npm ci && npx prisma generate && npx prisma migrate deploy && npm run build`
-4. Start command: `npm start`
-5. Add environment variables from the table above
-6. Create a PostgreSQL database on Render and copy the connection string
-
----
-
-## Database Migrations
-
-```bash
-npm run db:migrate         # Development: create and apply migration
-npm run db:migrate:deploy  # Production: apply existing migrations only
-npm run db:push            # Push schema without migration history (prototyping)
-npm run db:studio          # Open Prisma Studio
-npm run db:seed            # Reseed all 39 labs
-```
-
----
-
-## Testing
-
-```bash
-npm test                # Unit + integration tests
-npm run test:coverage   # With coverage
-npm run test:watch      # Watch mode
-npm run test:e2e        # End-to-end (requires dev server running)
-```
-
----
-
-## API Documentation
-
-### `POST /api/auth/register`
-Register a new user account.
-
-### `POST /api/start-lab`
-Start a deployable lab. Requires authentication. Returns a deployment ID and
-polls to `READY` once the container is live.
-
-### `POST /api/stop-lab`
-Stop a running deployable lab.
-
-### `GET /api/labs`
-List all labs (never includes the expected flag or Docker image name).
-Supports `?category=CRYPTO`, `?labType=OFFLINE`, `?featured=true`.
-
-### `POST /api/labs/[slug]/submit`
-Submit a flag for validation.
-
-```json
-{ "flag": "VR{your_recovered_flag}" }
-```
-
-Response:
-```json
-{
-  "success": true,
-  "data": {
-    "correct": true,
-    "alreadyCompleted": false,
-    "message": "Correct! Lab completed.",
-    "pointsEarned": 150,
-    "attemptCount": 3
-  }
-}
-```
-
-Validation happens entirely server-side against a SHA-256 hash — the plaintext
-flag never leaves the database.
-
-### `GET /api/labs/[slug]/hints?upTo=N`
-Progressively reveal hints for a lab, up to hint number `N`.
-
-### `GET /api/leaderboard`
-Top 50 users ranked by total points earned.
-
-### `GET /api/health`
-Health check endpoint used by Render.
-
----
-
-## Folder Structure
+## 📂 Project Structure
 
 ```
 viperrange/
-├── app/
-│   ├── (auth)/              # Login / Register — split-panel desktop, single-column mobile
-│   ├── (dashboard)/         # Protected dashboard pages
-│   │   ├── dashboard/       # Overview
-│   │   ├── labs/            # Lab marketplace with category filters
-│   │   ├── deployments/     # Deployment history
-│   │   ├── logs/            # Live terminal
-│   │   ├── walkthroughs/    # Step-by-step guides
-│   │   ├── profile/ settings/ admin/ billing/
-│   └── api/
-│       ├── labs/[slug]/submit/   # Flag submission
-│       ├── labs/[slug]/hints/    # Progressive hints
-│       ├── leaderboard/
-│       └── start-lab/ stop-lab/ lab-status/ logs/
-├── components/
-│   ├── auth/                # Split-panel login/register forms
-│   ├── labs/                # Lab cards, challenge modal, flag submission
-│   ├── dashboard/ logs/ ui/
-├── labs/                    # Deployable lab source (8 labs, each self-contained)
-│   ├── file-oracle/ pixel-cache/ crawler-protocol/ session-architect/
-│   ├── cipher-gate/ loose-types/ template-engine/ style-injector/
-│   └── build.sh
-├── public/
-│   ├── labs/                 # Synthetic evidence assets (SVG, fully original)
-│   └── resources/            # Offline-lab downloadable artifacts
-├── lib/
-│   ├── auth/ api/ db/ utils/  # Flag hashing (SHA-256) lives in lib/utils
-├── prisma/
-│   ├── schema.prisma          # Lab, LabSubmission, LabCompletion models
-│   └── seed.ts                # All 39 labs, walkthroughs, hints, flags
-├── types/ __tests__/ e2e/
-├── Dockerfile docker-compose.yml render.yaml vercel.json
-└── .github/workflows/
+├── app/                      # Next.js App Router (Pages, Layouts, API Handlers)
+│   ├── (auth)/               # Authentication views (Login, Registration)
+│   ├── (dashboard)/          # Authenticated user dashboard & lab views
+│   └── api/                  # Secure REST API endpoints
+│       ├── labs/             # Flag submissions, hint distribution, marketplace
+│       └── start-lab/        # Ephemeral container orchestration
+├── components/               # Modular UI components
+│   ├── auth/                 # Form controllers and security inputs
+│   ├── dashboard/            # Shell layouts, stats, profile & settings managers
+│   └── labs/                 # Interactive lab cards, challenge modal, flags
+├── labs/                     # Source definitions for deployable target containers
+│   ├── file-oracle/          # Port 8081 (LFI -> RCE Target)
+│   ├── pixel-cache/          # Port 8082 (Asset Token Leak)
+│   ├── crawler-protocol/     # Port 8083 (Exclusion Bypass)
+│   ├── session-architect/    # Port 8084 (Cookie Privilege Elevation)
+│   ├── cipher-gate/          # Port 8085 (JS Obfuscation Target)
+│   ├── loose-types/          # Port 8086 (PHP extract Variable Override)
+│   ├── template-engine/      # Port 8087 (Tornado SSTI Engine)
+│   └── style-injector/       # Port 8088 (CSS Side-Channel Exfiltration)
+├── prisma/                   # Database schema definitions and seed data
+├── public/                   # Static branding, favicons, and challenge assets
+├── scripts/                  # Automated verification & testing harnesses
+├── docker-compose.yml        # Core platform & PostgreSQL compose configuration
+└── docker-compose.labs.yml   # Deployable target containers orchestration
 ```
 
 ---
 
-## Flag Submission System
+## 🧪 Testing & Validation
 
-Every lab — deployable or offline — follows the same completion flow:
+Run the automated integration and validation test suites:
 
-1. Student opens the lab (deploys a live environment, or opens the offline
-   challenge modal with downloadable resources)
-2. Student exploits the vulnerability / solves the puzzle / completes the
-   investigation
-3. Student recovers a `VR{...}` flag
-4. Student submits it via the lab card or challenge modal
-5. `POST /api/labs/[slug]/submit` hashes the submission and compares it
-   against the stored SHA-256 hash — never the plaintext
-6. On the first correct submission, a `LabCompletion` row is created,
-   points are added to the student's `totalPoints`, and the UI updates
-7. Every submission (right or wrong) is logged to `LabSubmission` for
-   attempt tracking
+```bash
+# Run unit and API tests
+npm test
 
-Duplicate correct submissions do not award points twice.
+# Run offline labs flag validation audit
+node scripts/test-offline-labs.js
+
+# Run live deployable containers health audit
+node scripts/test-online-labs.js
+```
 
 ---
 
-## Security
+## 📄 License & Legal Notice
 
-- **Authentication**: bcrypt-hashed passwords (12 rounds), JWT sessions via Auth.js
-- **Flag validation**: SHA-256 hash comparison via `crypto.timingSafeEqual` — resistant to timing attacks, never trusts the client
-- **Rate Limiting**: Per-IP and per-user limits on auth, deployment, and flag-submission endpoints
-- **Authorization**: Role-based (STUDENT / INSTRUCTOR / ADMIN) with row-level checks
-- **Input Validation**: Zod schemas on all API inputs
-- **SQL Injection**: Prisma parameterized queries only
-- **Audit Logging**: All sensitive actions logged with IP, user agent, and metadata
-- **Secrets**: Environment variables only — never committed to source; deployable-lab flags are injected via container `ENV`, never baked into a public image layer or exposed through `/api/labs`
+This project is licensed under the **MIT License**.
+
+> **Notice**: All lab environments and exploit scenarios are designed exclusively for legal, authorized security education and research. Do not execute exploit techniques against systems without explicit, written authorization.
 
 ---
 
-## OSINT Labs — Synthetic Evidence Policy
-
-All three OSINT labs (`digital-echo`, `shadow-agent`, `ghost-archive`) are
-built entirely around fictional people, organizations, and events. No real
-individual's photograph, identity, or personal data is used anywhere in the
-platform. Evidence assets are original SVG graphics generated specifically
-for ViperRange and depict no real person.
-
----
-
-## Legal Notice
-
-ViperRange is a security education platform. All lab environments are
-intentionally vulnerable applications deployed for **authorized training
-purposes only**.
-
-- Users may **only** test their own spawned lab environments
-- Attacking systems you do not own or have explicit permission to test is **illegal**
-- ZeroDay Security Services is not responsible for misuse
-
----
-
-## About ZeroDay Security Services
-
-ZeroDay Security Services is a cybersecurity and intelligence technology
-startup based in **Siliguri, West Bengal, India**. We operate across:
-
-- Vulnerability Research
-- Threat Intelligence
-- OSINT Investigations
-- AI Development
-- Security Education
-
-**ViperRange** is the practical training infrastructure for our security curriculum.
-
----
-
-## License
-
-MIT © 2026 ZeroDay Security Services 
+<div align="center">
+  <sub>© 2026 ZeroDay Security Services. All rights reserved.</sub>
+</div>
