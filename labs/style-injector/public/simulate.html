@@ -3,39 +3,224 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reviewer Simulation — ViperRange</title>
+<title>CSS Attack Simulator — Style Injector | ViperRange</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:#0a0a10;color:#e4e4ee;font-family:monospace;display:flex;flex-direction:column;
-     align-items:center;min-height:100vh;padding:2.5rem 1.5rem;}
-h1{color:#fb923c;font-size:1.7rem;margin-bottom:0.4rem;}
-p{color:#6b6b85;margin-bottom:1.5rem;text-align:center;max-width:500px;font-size:0.85rem;}
-.panel{background:#12121a;border:1px solid #262636;border-radius:8px;padding:1.6rem;width:100%;max-width:600px;}
-textarea{width:100%;height:160px;background:#1a1a26;border:1px solid #2e2e42;color:#e4e4ee;
-         padding:0.8rem;font-family:monospace;font-size:0.8rem;border-radius:6px;resize:vertical;}
-button{margin-top:1rem;background:#fb923c;color:#0a0a10;border:none;padding:0.6rem 1.8rem;
-       font-family:monospace;font-weight:bold;cursor:pointer;border-radius:6px;}
-button:hover{background:#f97316;}
-.output{margin-top:1.2rem;padding:1rem;background:#0d0d14;border-left:3px solid #fb923c;font-size:0.85rem;}
-.example{margin-top:1rem;padding:0.8rem;background:#0d0d14;border-radius:6px;font-size:0.75rem;color:#7d7d95;}
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #08080f;
+    color: #e4e4ee;
+    font-family: 'Courier New', monospace;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+    padding: 3rem 1.5rem;
+  }
+  .header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: rgba(251, 146, 60, 0.1);
+    border: 1px solid rgba(251, 146, 60, 0.3);
+    color: #fb923c;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 0.35rem 0.8rem;
+    border-radius: 9999px;
+    margin-bottom: 0.8rem;
+    letter-spacing: 1px;
+  }
+  .beacon {
+    width: 8px; height: 8px;
+    background: #fb923c;
+    border-radius: 50%;
+    box-shadow: 0 0 8px #fb923c;
+  }
+  h1 {
+    color: #ffffff;
+    font-size: 1.8rem;
+    margin-bottom: 0.4rem;
+  }
+  p {
+    color: #8f90a6;
+    font-size: 0.85rem;
+    max-width: 620px;
+    line-height: 1.5;
+  }
+  .panel {
+    background: #10101a;
+    border: 1px solid #232338;
+    border-radius: 12px;
+    padding: 2rem;
+    width: 100%;
+    max-width: 680px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+    position: relative;
+  }
+  .terminal-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 1px solid #1e1e2e;
+    font-size: 0.75rem;
+    color: #6b7280;
+  }
+  textarea {
+    width: 100%;
+    height: 180px;
+    background: #090912;
+    border: 1px solid #2e2e46;
+    color: #00ff88;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    font-size: 0.85rem;
+    border-radius: 8px;
+    resize: vertical;
+    outline: none;
+  }
+  textarea:focus {
+    border-color: #fb923c;
+    box-shadow: 0 0 10px rgba(251, 146, 60, 0.2);
+  }
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1.2rem;
+  }
+  button {
+    background: #fb923c;
+    color: #08080f;
+    border: none;
+    padding: 0.8rem 1.8rem;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+  }
+  button:hover {
+    background: #f97316;
+    box-shadow: 0 0 15px rgba(251, 146, 60, 0.4);
+  }
+  .back-link {
+    color: #8f90a6;
+    text-decoration: none;
+    font-size: 0.8rem;
+    transition: color 0.2s;
+  }
+  .back-link:hover {
+    color: #ffffff;
+  }
+  .output {
+    margin-top: 1.5rem;
+    padding: 1.2rem;
+    background: #090912;
+    border: 1px solid #232338;
+    border-left: 4px solid #fb923c;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    display: none;
+  }
+  .output-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
+  .metric-card {
+    background: #141420;
+    padding: 0.75rem;
+    border-radius: 6px;
+    border: 1px solid #262638;
+  }
+  .metric-label {
+    font-size: 0.7rem;
+    color: #6b7280;
+    text-transform: uppercase;
+  }
+  .metric-value {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 0.2rem;
+  }
+  .prefix-result {
+    background: #181828;
+    padding: 0.8rem;
+    border-radius: 6px;
+    border: 1px solid #3b3b54;
+    color: #00ff88;
+    font-weight: bold;
+    word-break: break-all;
+  }
+  .hint-box {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    background: rgba(59, 130, 246, 0.05);
+    border: 1px solid rgba(59, 130, 246, 0.2);
+    border-radius: 8px;
+    font-size: 0.75rem;
+    color: #93c5fd;
+    line-height: 1.5;
+  }
 </style>
 </head>
 <body>
-<h1>🧪 Reviewer Render Simulation</h1>
-<p>Paste the CSS you would inject via the <code>color</code> parameter. This simulates what a
-   privileged reviewer's browser would evaluate against the page's hidden session field.</p>
+
+<div class="header">
+  <div class="badge"><span class="beacon"></span> ATTRIBUTE SELECTOR EXFILTRATION</div>
+  <h1>🧪 Side-Channel Attack Simulator</h1>
+  <p>Submit candidate CSS rules to simulate exfiltration against the target browser's hidden DOM session token.</p>
+</div>
+
 <div class="panel">
-  <textarea id="css" placeholder="teal;} #secret[value^=&quot;VR{&quot;]{background-image:url(x);} ..."></textarea>
-  <button onclick="runSim()">Simulate Render</button>
-  <div class="output" id="output" style="display:none;"></div>
-  <div class="example">
-    Tip: submit many selectors in one request — one per candidate character —
-    to narrow the matching prefix faster.
+  <div class="terminal-top">
+    <span>PAYLOAD INJECTION BUFFER</span>
+    <span>TARGET: #secret[value^="..."]</span>
+  </div>
+
+  <textarea id="css" placeholder="teal;}
+#secret[value^=&quot;VR{a&quot;]{background-image:url(x);}
+#secret[value^=&quot;VR{b&quot;]{background-image:url(x);}
+#secret[value^=&quot;VR{c&quot;]{background-image:url(x);} ..."></textarea>
+
+  <div class="controls">
+    <a href="/" class="back-link">← Return to Theme Target</a>
+    <button onclick="runSim()">Execute Simulation</button>
+  </div>
+
+  <div class="output" id="output">
+    <div class="output-grid">
+      <div class="metric-card">
+        <div class="metric-label">Rules Evaluated</div>
+        <div class="metric-value" id="rulesCount">0</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">Network Triggers Fired</div>
+        <div class="metric-value" id="requestsCount" style="color:#fb923c;">0</div>
+      </div>
+    </div>
+    <div class="metric-label" style="margin-bottom:0.4rem;">Longest Verified Match Prefix</div>
+    <div class="prefix-result" id="prefixValue">(none)</div>
+  </div>
+
+  <div class="hint-box">
+    <strong>💡 Attack Strategy:</strong> Combine multiple attribute prefix rules in a single payload to binary-search or brute-force each character of the flag.
   </div>
 </div>
+
 <script>
 async function runSim() {
   const css = document.getElementById('css').value;
+  if (!css.trim()) return;
+
   const res = await fetch('/api/simulate', {
     method: 'POST',
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -44,10 +229,10 @@ async function runSim() {
   const data = await res.json();
   const out = document.getElementById('output');
   out.style.display = 'block';
-  out.innerHTML =
-    'Rules parsed: ' + data.rulesParsed + '<br>' +
-    'Requests fired: ' + data.requestsFired + '<br>' +
-    'Longest matched prefix: <strong>' + (data.matchedPrefix || '(none)') + '</strong>';
+
+  document.getElementById('rulesCount').innerText = data.rulesParsed;
+  document.getElementById('requestsCount').innerText = data.requestsFired;
+  document.getElementById('prefixValue').innerText = data.matchedPrefix || '(No selector matched target)';
 }
 </script>
 </body>
