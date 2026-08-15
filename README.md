@@ -34,7 +34,7 @@ It provides an enterprise web platform paired with **39 original, realistic hand
 │           ▼                                                            │
 │   ┌─────────────────────────────────────────────────────────────┐      │
 │   │ Next.js 14 Web Application (Edge / Serverless Runtime)      │      │
-│   │ ├── Dashboard UI (React 18 + Tailwind CSS + Framer Motion) │      │
+│   │ ├── Dashboard UI (React 18 + Tailwind CSS + Framer Motion)  │      │
 │   │ ├── NextAuth.js JWT Session Gatekeeper                      │      │
 │   │ ├── Constant-Time SHA-256 Flag Verification Pipeline        │      │
 │   │ └── RESTful APIs (/api/labs, /api/deployments, /api/logs)   │      │
