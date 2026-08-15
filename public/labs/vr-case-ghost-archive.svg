@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#141420"/>
+  <!-- fictional archival photo simulation: two generic silhouettes, sepia toned, no real people -->
+  <rect x="60" y="40" width="520" height="320" fill="#2a2416" opacity="0.6"/>
+  <g fill="#0d0d11" opacity="0.85">
+    <circle cx="260" cy="180" r="34"/>
+    <rect x="228" y="210" width="64" height="110" rx="10"/>
+    <circle cx="380" cy="185" r="34"/>
+    <rect x="348" y="215" width="64" height="105" rx="10"/>
+  </g>
+  <rect x="60" y="40" width="520" height="320" fill="none" stroke="#8b7355" stroke-width="4"/>
+  <text x="320" y="30" text-anchor="middle" fill="#8b7355" font-family="monospace" font-size="12">ARCHIVE PLATE — FICTIONAL RECORD</text>
+  <text x="320" y="385" text-anchor="middle" fill="#3a3a52" font-family="monospace" font-size="10">VR-CASE-GHOST-ARCHIVE-01 — SYNTHETIC ASSET — NO REAL INDIVIDUALS DEPICTED</text>
+</svg>

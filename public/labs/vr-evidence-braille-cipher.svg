@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#0d0d11"/>
+  <g transform="translate(160,140)">
+    <!-- synthetic braille-like dot grid pattern, purely decorative/fictional -->
+    <g fill="#8b5cf6">
+      <circle cx="0" cy="0" r="5"/><circle cx="0" cy="20" r="5" opacity="0.2"/><circle cx="0" cy="40" r="5"/>
+      <circle cx="24" cy="0" r="5" opacity="0.2"/><circle cx="24" cy="20" r="5"/><circle cx="24" cy="40" r="5"/>
+    </g>
+    <g fill="#00ff88" transform="translate(80,0)">
+      <circle cx="0" cy="0" r="5" opacity="0.2"/><circle cx="0" cy="20" r="5"/><circle cx="0" cy="40" r="5" opacity="0.2"/>
+      <circle cx="24" cy="0" r="5"/><circle cx="24" cy="20" r="5"/><circle cx="24" cy="40" r="5" opacity="0.2"/>
+    </g>
+    <g fill="#ffd700" transform="translate(160,0)">
+      <circle cx="0" cy="0" r="5"/><circle cx="0" cy="20" r="5"/><circle cx="0" cy="40" r="5" opacity="0.2"/>
+      <circle cx="24" cy="0" r="5" opacity="0.2"/><circle cx="24" cy="20" r="5" opacity="0.2"/><circle cx="24" cy="40" r="5"/>
+    </g>
+  </g>
+  <text x="320" y="330" text-anchor="middle" fill="#6b6b85" font-family="monospace" font-size="14">VR-EVIDENCE-BRAILLE-CIPHER-01</text>
+  <text x="320" y="350" text-anchor="middle" fill="#3a3a52" font-family="monospace" font-size="10">SYNTHETIC ASSET — VIPERRANGE TRAINING ENVIRONMENT</text>
+</svg>

@@ -1,0 +1,47 @@
+# ViperRange — Render Deployment Configuration
+# ZeroDay Security Services
+# https://render.com/docs/yaml-spec
+
+services:
+  # ── ViperRange Next.js App ────────────────────────────────────────────────────
+  - type: web
+    name: viperrange
+    runtime: node
+    region: oregon
+    plan: starter
+    branch: main
+    buildCommand: npm ci && npx prisma generate && npx prisma migrate deploy && npm run build
+    startCommand: npm start
+    healthCheckPath: /api/health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NEXT_TELEMETRY_DISABLED
+        value: "1"
+      - key: DATABASE_URL
+        fromDatabase:
+          name: viperrange-db
+          property: connectionString
+      - key: AUTH_SECRET
+        generateValue: true
+      - key: RENDER_API_KEY
+        sync: false
+      - key: RENDER_OWNER_ID
+        sync: false
+      - key: ADMIN_EMAILS
+        sync: false
+      - key: BETTERSTACK_SOURCE_TOKEN
+        sync: false
+      - key: UPSTASH_REDIS_REST_URL
+        sync: false
+      - key: UPSTASH_REDIS_REST_TOKEN
+        sync: false
+    autoDeploy: true
+
+databases:
+  - name: viperrange-db
+    databaseName: viperrange
+    user: viperrange
+    region: oregon
+    plan: starter
+    ipAllowList: []

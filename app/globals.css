@@ -1,0 +1,260 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-orbitron: 'Orbitron', sans-serif;
+  --font-jetbrains: 'JetBrains Mono', monospace;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  html {
+    @apply scroll-smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #FF3344 #1F1F2E;
+  }
+
+  html::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  html::-webkit-scrollbar-track {
+    background: #1F1F2E;
+  }
+
+  html::-webkit-scrollbar-thumb {
+    background: #FF3344;
+    border-radius: 3px;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv11", "ss01";
+  }
+
+  ::selection {
+    background: rgba(255, 51, 68, 0.35);
+    color: #ffffff;
+  }
+
+  h1, h2, h3 {
+    @apply font-display tracking-wide;
+  }
+
+  h4, h5, h6 {
+    @apply font-sans font-semibold;
+  }
+
+  code, pre, kbd {
+    @apply font-mono;
+  }
+}
+
+@layer components {
+  /* Glass card — the primary surface */
+  .glass-card {
+    @apply backdrop-blur-md bg-white/5 border border-white/10 rounded-lg;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.07);
+  }
+
+  .glass-card-hover {
+    @apply glass-card transition-all duration-300;
+  }
+
+  .glass-card-hover:hover {
+    @apply border-primary/30;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 20px rgba(255,51,68,0.12);
+    transform: translateY(-2px);
+  }
+
+  /* Cyberpunk grid background */
+  .cyber-grid {
+    background-image:
+      linear-gradient(rgba(255,51,68,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,51,68,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  /* Terminal output */
+  .terminal {
+    @apply bg-background border border-white/10 rounded-lg font-mono text-sm;
+    background: #080810;
+  }
+
+  .terminal-line {
+    @apply py-0.5 px-1 rounded;
+  }
+
+  .terminal-line:hover {
+    @apply bg-white/5;
+  }
+
+  /* Status badge */
+  .status-badge {
+    @apply inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium font-mono;
+  }
+
+  .status-dot {
+    @apply w-1.5 h-1.5 rounded-full;
+  }
+
+  /* Glow button */
+  .btn-glow {
+    @apply relative overflow-hidden transition-all duration-200;
+  }
+
+  .btn-glow::before {
+    content: '';
+    @apply absolute inset-0 opacity-0 transition-opacity duration-200;
+    background: radial-gradient(ellipse at center, rgba(255,51,68,0.3) 0%, transparent 70%);
+  }
+
+  .btn-glow:hover::before {
+    @apply opacity-100;
+  }
+
+  /* Nav item */
+  .nav-item {
+    @apply flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-200 text-muted-foreground;
+  }
+
+  .nav-item:hover {
+    @apply text-foreground bg-white/5;
+  }
+
+  .nav-item.active {
+    @apply text-foreground bg-primary/10 border border-primary/20;
+  }
+
+  .nav-item.active svg {
+    @apply text-primary;
+  }
+
+  /* Scan line effect */
+  .scan-overlay {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .scan-overlay::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(255,51,68,0.6), transparent);
+    animation: scanLine 4s linear infinite;
+    pointer-events: none;
+  }
+
+  /* Input styles */
+  .cyber-input {
+    @apply w-full bg-surface border border-white/10 rounded-lg px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground
+           focus:outline-none focus:ring-2 focus:ring-primary/40 focus:border-primary/40 transition-all duration-200;
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #FF3344 0%, #FF6677 50%, #FFD700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .gradient-text-cyan {
+    background: linear-gradient(135deg, #00D4FF 0%, #8B5CF6 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    @apply h-1 rounded-full bg-surface overflow-hidden;
+  }
+
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500;
+    background: linear-gradient(90deg, #FF3344, #FFD700);
+  }
+
+  /* Deployment progress animation */
+  .deploy-progress {
+    background: linear-gradient(90deg, #FF3344 0%, #FF6677 50%, #FFD700 100%);
+    background-size: 200% 100%;
+    animation: shimmer 2s ease-in-out infinite;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .thin-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,51,68,0.4) transparent;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .thin-scrollbar::-webkit-scrollbar-thumb {
+    background: rgba(255,51,68,0.4);
+    border-radius: 2px;
+  }
+}
+
+@keyframes scanLine {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 10px rgba(255,51,68,0.3); }
+  50% { box-shadow: 0 0 30px rgba(255,51,68,0.7), 0 0 60px rgba(255,51,68,0.3); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scan-overlay::after,
+  .deploy-progress,
+  .animate-pulse {
+    animation: none;
+  }
+}
+
+/* Safe area for devices with home indicator (iPhone, etc.) */
+.safe-area-pb {
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Tablet-specific adjustments */
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Give the bottom tab bar a little more height on tablets */
+  nav[aria-label="Mobile navigation"] {
+    height: 4.5rem;
+  }
+}

@@ -1,0 +1,117 @@
+# ViperRange — Local Vulnerable Lab Containers
+# ZeroDay Security Services
+#
+# Use this compose file to spin up all 8 deployable vulnerable labs locally.
+# Run: docker compose -f docker-compose.labs.yml up -d --build
+# Stop: docker compose -f docker-compose.labs.yml down
+
+services:
+  vr-file-oracle:
+    build:
+      context: ./labs/file-oracle
+      dockerfile: Dockerfile
+    container_name: vr-file-oracle
+    environment:
+      - FLAG=VR{oracle_lfi_chain_to_rce}
+      - GATE_TOKEN=oracle-gate-7f3a91
+    ports:
+      - "8081:80"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+  vr-pixel-cache:
+    build:
+      context: ./labs/pixel-cache
+      dockerfile: Dockerfile
+    container_name: vr-pixel-cache
+    environment:
+      - FLAG=VR{css_comments_are_not_secrets}
+    ports:
+      - "8082:3000"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+  vr-crawler-protocol:
+    build:
+      context: ./labs/crawler-protocol
+      dockerfile: Dockerfile
+    container_name: vr-crawler-protocol
+    environment:
+      - FLAG=VR{robots_txt_is_a_suggestion}
+    ports:
+      - "8083:5000"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+  vr-session-architect:
+    build:
+      context: ./labs/session-architect
+      dockerfile: Dockerfile
+    container_name: vr-session-architect
+    environment:
+      - FLAG=VR{base64_is_not_encryption}
+    ports:
+      - "8084:3000"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+  vr-cipher-gate:
+    build:
+      context: ./labs/cipher-gate
+      dockerfile: Dockerfile
+    container_name: vr-cipher-gate
+    environment:
+      - FLAG=VR{obfuscation_hides_not_protects}
+    ports:
+      - "8085:3000"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+  vr-loose-types:
+    build:
+      context: ./labs/loose-types
+      dockerfile: Dockerfile
+    container_name: vr-loose-types
+    environment:
+      - FLAG=VR{extract_overwrites_everything}
+    ports:
+      - "8086:80"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+  vr-template-engine:
+    build:
+      context: ./labs/template-engine
+      dockerfile: Dockerfile
+    container_name: vr-template-engine
+    environment:
+      - FLAG=VR{ssti_forges_the_session}
+      - VAULT_KEY=vr-vault-9c1e5f
+    ports:
+      - "8087:8888"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+  vr-style-injector:
+    build:
+      context: ./labs/style-injector
+      dockerfile: Dockerfile
+    container_name: vr-style-injector
+    environment:
+      - FLAG=VR{css_selectors_leak_secrets}
+    ports:
+      - "8088:3000"
+    restart: unless-stopped
+    networks:
+      - viperrange-labs
+
+networks:
+  viperrange-labs:
+    driver: bridge

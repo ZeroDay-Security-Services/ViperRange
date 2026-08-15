@@ -1,0 +1,5 @@
+# ViperRange Archive Gateway — crawler policy
+# Please respect the following exclusions.
+
+User-agent: *
+Disallow: /archive/internal/manifest

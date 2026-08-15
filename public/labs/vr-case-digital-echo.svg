@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <defs>
+    <linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#334155"/>
+    </linearGradient>
+  </defs>
+  <rect width="640" height="260" fill="url(#sky1)"/>
+  <rect y="260" width="640" height="140" fill="#0d0d11"/>
+  <!-- fictional silhouette skyline, no real landmark -->
+  <g fill="#0f172a">
+    <rect x="60" y="150" width="60" height="110"/>
+    <rect x="140" y="110" width="50" height="150"/>
+    <rect x="210" y="170" width="70" height="90"/>
+    <rect x="300" y="90" width="55" height="170"/>
+    <rect x="380" y="140" width="65" height="120"/>
+    <rect x="470" y="100" width="50" height="160"/>
+    <rect x="540" y="160" width="60" height="100"/>
+  </g>
+  <circle cx="500" cy="70" r="24" fill="#fbbf24" opacity="0.85"/>
+  <text x="320" y="330" text-anchor="middle" fill="#6b6b85" font-family="monospace" font-size="14">VR-CASE-DIGITAL-ECHO-01 (fictional skyline)</text>
+  <text x="320" y="350" text-anchor="middle" fill="#3a3a52" font-family="monospace" font-size="10">SYNTHETIC ASSET — VIPERRANGE TRAINING ENVIRONMENT — NO REAL LOCATION</text>
+</svg>

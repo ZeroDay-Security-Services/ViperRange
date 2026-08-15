@@ -1,0 +1,27 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npx prisma generate && npm run build",
+  "installCommand": "npm ci",
+  "outputDirectory": ".next",
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, max-age=0" }
+      ]
+    }
+  ],
+  "rewrites": [],
+  "redirects": [
+    {
+      "source": "/home",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "functions": {
+    "app/api/**": {
+      "maxDuration": 30
+    }
+  }
+}

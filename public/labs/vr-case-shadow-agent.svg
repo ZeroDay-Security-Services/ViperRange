@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400">
+  <rect width="640" height="400" fill="#0d0d11"/>
+  <!-- fictional object evidence: a stylized wristwatch icon, no real photo -->
+  <g transform="translate(320,190)">
+    <circle r="70" fill="#1f1f2e" stroke="#ffd700" stroke-width="3"/>
+    <circle r="58" fill="none" stroke="#3a3a52" stroke-width="1"/>
+    <line x1="0" y1="0" x2="0" y2="-38" stroke="#e8e8f0" stroke-width="3" stroke-linecap="round"/>
+    <line x1="0" y1="0" x2="26" y2="10" stroke="#e8e8f0" stroke-width="3" stroke-linecap="round"/>
+    <circle r="4" fill="#ff3344"/>
+    <rect x="-14" y="-95" width="28" height="30" rx="4" fill="#1f1f2e" stroke="#ffd700" stroke-width="2"/>
+    <rect x="-14" y="65" width="28" height="30" rx="4" fill="#1f1f2e" stroke="#ffd700" stroke-width="2"/>
+  </g>
+  <text x="320" y="335" text-anchor="middle" fill="#6b6b85" font-family="monospace" font-size="14">VR-CASE-SHADOW-AGENT-01 (fictional artifact)</text>
+  <text x="320" y="355" text-anchor="middle" fill="#3a3a52" font-family="monospace" font-size="10">SYNTHETIC ASSET — VIPERRANGE TRAINING ENVIRONMENT — NO REAL PERSON</text>
+</svg>

@@ -1,0 +1,53 @@
+# ViperRange — Docker Compose (local development)
+# ZeroDay Security Services
+
+services:
+  # ── Next.js Application ──────────────────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runner
+    container_name: viperrange-app
+    ports:
+      - "3001:3000"
+    env_file:
+      - .env.local
+    environment:
+      - DATABASE_URL=postgresql://viperrange:viperrange@postgres:5432/viperrange?schema=public
+      - NODE_ENV=production
+    depends_on:
+      postgres:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - viperrange-network
+
+  # ── PostgreSQL ────────────────────────────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: viperrange-postgres
+    environment:
+      POSTGRES_USER: viperrange
+      POSTGRES_PASSWORD: viperrange
+      POSTGRES_DB: viperrange
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U viperrange"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
+    networks:
+      - viperrange-network
+
+volumes:
+  postgres-data:
+    driver: local
+
+networks:
+  viperrange-network:
+    driver: bridge
