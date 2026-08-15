@@ -3,13 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ViperRange Design Relay</title>
+    <title>Pixel Cache — ViperRange Cyber Range</title>
     <link rel="stylesheet" href="/assets/theme.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background: #08080f;
+            color: #e4e4ee;
+            font-family: 'Courier New', monospace;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 3rem 1.5rem;
+        }
+        .card {
+            background: #10101a;
+            border: 1px solid #232338;
+            border-radius: 12px;
+            padding: 2.5rem;
+            width: 100%;
+            max-width: 580px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, #a855f7, #6366f1, #3b82f6);
+        }
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(168, 85, 247, 0.1);
+            border: 1px solid rgba(168, 85, 247, 0.3);
+            color: #c084fc;
+            font-size: 0.75rem;
+            font-weight: bold;
+            padding: 0.35rem 0.8rem;
+            border-radius: 9999px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 1px;
+        }
+        .beacon {
+            width: 8px; height: 8px;
+            background: #c084fc;
+            border-radius: 50%;
+            box-shadow: 0 0 8px #c084fc;
+        }
+        h1 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        p {
+            color: #8f90a6;
+            font-size: 0.85rem;
+            line-height: 1.6;
+            margin-bottom: 1rem;
+        }
+        .asset-box {
+            background: #090912;
+            border: 1px solid #232338;
+            border-radius: 8px;
+            padding: 1.2rem;
+            text-align: left;
+            margin: 1.5rem 0;
+            font-size: 0.8rem;
+            color: #c084fc;
+        }
+        .footer-note {
+            color: #52526b;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+    </style>
 </head>
 <body>
-    <div class="brand">◆ Design Relay</div>
-    <h1>Internal Theme Service</h1>
-    <p>This service exists to distribute the current design tokens to internal tools.</p>
-    <p>Bundle assets are served from <code>/assets</code>.</p>
+    <div class="card">
+        <div class="badge"><span class="beacon"></span> STATIC TOKEN ASSET RELAY</div>
+        <h1>◆ Pixel Cache Relay</h1>
+        <p>Production stylesheet distribution node serving dynamic design tokens to ViperRange infrastructure.</p>
+        
+        <div class="asset-box">
+            <div style="color:#6b7280;margin-bottom:0.4rem;">$ assets --inspect</div>
+            <div>LINKED STYLESHEET: /assets/theme.css</div>
+            <div>STATUS: COMPILED & DISTRIBUTED</div>
+        </div>
+
+        <p style="color:#6b7280; font-size:0.8rem;">Examine linked production assets to identify configuration metadata.</p>
+        <div class="footer-note">ZERODAY SECURITY SERVICES — VIPERRANGE ACTIVE TARGET NODE</div>
+    </div>
 </body>
 </html>
