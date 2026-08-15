@@ -4,8 +4,8 @@
 
 ```
 ╔══════════════════════════════════════════════════════╗
-║  VIPERRANGE  ·  Ephemeral Cyber Labs                  ║
-║  ZeroDay Security Services                            ║
+║  VIPERRANGE  ·  Ephemeral Cyber Labs                 ║
+║  ZeroDay Security Services                           ║
 ╚══════════════════════════════════════════════════════╝
 ```
 
