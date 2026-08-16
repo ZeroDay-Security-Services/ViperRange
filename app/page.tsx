@@ -281,7 +281,7 @@ export default function HomePage() {
       <section id="labs" className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 sm:py-24">
         <div className="text-center mb-12 sm:mb-16">
           <div className="inline-block text-xs font-mono text-primary bg-primary/10 border border-primary/20 px-3 py-1 rounded-full mb-4 uppercase tracking-widest">
-            Lab Marketplace
+            Cyber Arena
           </div>
           <h2 className="font-display text-2xl sm:text-4xl font-bold text-white">
             Industry-Standard Targets

@@ -8,7 +8,7 @@ import type { SessionUser } from "@/types";
 
 const PAGE_TITLES: Record<string, string> = {
   "/dashboard":    "Overview",
-  "/labs":         "Lab Marketplace",
+  "/labs":         "Cyber Arena",
   "/deployments":  "Deployments",
   "/logs":         "Security Logs",
   "/walkthroughs": "Walkthroughs",
