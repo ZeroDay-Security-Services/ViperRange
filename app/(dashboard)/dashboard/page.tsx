@@ -60,7 +60,7 @@ export default async function DashboardPage() {
       icon: FlaskConical,
       color: "text-secondary",
       bg: "bg-secondary/10 border-secondary/20",
-      change: "In marketplace",
+      change: "In Arena",
     },
     {
       label: "Completed",

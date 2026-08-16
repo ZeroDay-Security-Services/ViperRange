@@ -1,12 +1,13 @@
-// ViperRange — Lab Marketplace
+// ViperRange — Cyber Arena
 // ZeroDay Security Services
 
 import { requireAuth } from "@/lib/auth/helpers";
 import { prisma } from "@/lib/db";
+import { ensureLabsSeeded } from "@/lib/db/seed-data";
 import { LabsMarketplace } from "@/components/labs/labs-marketplace";
 import type { Metadata } from "next";
 
-export const metadata: Metadata = { title: "Lab Marketplace" };
+export const metadata: Metadata = { title: "Cyber Arena" };
 
 interface LabWithState {
   id: string;
@@ -34,11 +35,21 @@ interface LabWithState {
 }
 
 async function getLabsWithState(userId: string): Promise<LabWithState[]> {
-  const [labs, activeDeployments, completions] = await Promise.all([
-    prisma.lab.findMany({
+  let labs = await prisma.lab.findMany({
+    where: { isActive: true },
+    orderBy: [{ isFeatured: "desc" }, { name: "asc" }],
+  });
+
+  // Auto-seed if database is freshly deployed
+  if (labs.length === 0) {
+    await ensureLabsSeeded();
+    labs = await prisma.lab.findMany({
       where: { isActive: true },
       orderBy: [{ isFeatured: "desc" }, { name: "asc" }],
-    }),
+    });
+  }
+
+  const [activeDeployments, completions] = await Promise.all([
     prisma.deployment.findMany({
       where: {
         userId,
@@ -87,11 +98,18 @@ export default async function LabsPage() {
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div>
-        <h2 className="text-xl font-semibold text-white mb-1">Lab Marketplace</h2>
-        <p className="text-sm text-muted-foreground">
-          39 hands-on challenges across 8 categories. Deploy live environments or work offline artifacts — every lab ends with a flag to submit.
-        </p>
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-border/40 pb-5">
+        <div>
+          <div className="flex items-center gap-2.5 mb-1.5">
+            <span className="w-2.5 h-2.5 rounded-full bg-primary animate-pulse" />
+            <h2 className="text-2xl font-display font-bold text-white tracking-wide">
+              CYBER <span className="text-primary">ARENA</span>
+            </h2>
+          </div>
+          <p className="text-sm text-muted-foreground max-w-2xl">
+            39 tactical offensive challenges across 8 domains. Deploy live target containers or dissect offline forensic & binary artifacts to capture flags.
+          </p>
+        </div>
       </div>
 
       <LabsMarketplace labs={labs} />

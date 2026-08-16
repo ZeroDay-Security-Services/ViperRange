@@ -22,7 +22,7 @@ import type { SessionUser } from "@/types";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "Overview",     icon: LayoutDashboard },
-  { href: "/labs",       label: "Labs",         icon: FlaskConical },
+  { href: "/labs",       label: "Cyber Arena",  icon: FlaskConical },
   { href: "/deployments",label: "Deployments",  icon: Activity },
   { href: "/logs",       label: "Logs",         icon: Terminal },
   { href: "/walkthroughs",label:"Walkthroughs", icon: BookOpen },

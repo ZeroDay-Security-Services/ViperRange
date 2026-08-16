@@ -5,12 +5,19 @@ import { type NextRequest, NextResponse } from "next/server";
 import { type Prisma, type LabCategory, type LabType } from "@prisma/client";
 import { auth } from "@/lib/auth/config";
 import { prisma } from "@/lib/db";
+import { ensureLabsSeeded } from "@/lib/db/seed-data";
 
 // GET /api/labs — list active labs (authenticated). Never exposes expectedFlagHash.
 export async function GET(request: NextRequest) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ success: false, error: "Authentication required." }, { status: 401 });
+  }
+
+  // Auto-seed if database is empty
+  const totalCount = await prisma.lab.count();
+  if (totalCount === 0) {
+    await ensureLabsSeeded();
   }
 
   const { searchParams } = request.nextUrl;
