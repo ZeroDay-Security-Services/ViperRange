@@ -397,17 +397,27 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
               </>
             )
           ) : (
-            <button
-              onClick={() => setModalOpen(true)}
-              className="flex-1 flex items-center justify-center gap-2 bg-accent-purple/15 hover:bg-accent-purple/25 border border-accent-purple/30 text-accent-purple text-xs font-semibold py-2.5 px-3 rounded-lg transition-all duration-200"
-            >
-              {lab.category === "OSINT" ? (
-                <Eye className="w-3.5 h-3.5" />
-              ) : (
-                <FolderOpen className="w-3.5 h-3.5" />
-              )}
-              {OFFLINE_ACTION_LABEL[lab.category] ?? "Open Challenge"}
-            </button>
+            <>
+              <button
+                onClick={() => setModalOpen(true)}
+                className="flex-1 flex items-center justify-center gap-2 bg-accent-purple/15 hover:bg-accent-purple/25 border border-accent-purple/30 text-accent-purple text-xs font-semibold py-2.5 px-3 rounded-lg transition-all duration-200"
+              >
+                {lab.category === "OSINT" ? (
+                  <Eye className="w-3.5 h-3.5" />
+                ) : (
+                  <FolderOpen className="w-3.5 h-3.5" />
+                )}
+                {OFFLINE_ACTION_LABEL[lab.category] ?? "Open Challenge"}
+              </button>
+              <button
+                onClick={() => setModalOpen(true)}
+                className="flex items-center justify-center gap-1.5 bg-surface hover:bg-surface-light border border-white/10 hover:border-white/20 text-foreground text-xs font-medium py-2.5 px-3 rounded-lg transition-all duration-200"
+                title="Submit Flag"
+              >
+                <Flag className="w-3.5 h-3.5 text-primary" />
+                <span>Submit Flag</span>
+              </button>
+            </>
           )}
         </div>
       </div>
