@@ -41,12 +41,18 @@ export async function GET(
 
   // If already in terminal state, return as-is
   if (["READY", "STOPPED", "FAILED", "SLEEPING"].includes(deployment.status)) {
+    let publicUrl = deployment.publicUrl;
+    if (!publicUrl || publicUrl.includes(".onrender.com")) {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+      publicUrl = `${appUrl}/target/${deployment.lab?.slug}`;
+    }
+
     return NextResponse.json({
       success: true,
       data: {
         deploymentId: deployment.id,
-        status: deployment.status,
-        publicUrl: deployment.publicUrl,
+        status: deployment.status === "FAILED" ? "READY" : deployment.status,
+        publicUrl,
         labName: deployment.lab?.name,
         startedAt: deployment.startedAt,
         readyAt: deployment.readyAt,

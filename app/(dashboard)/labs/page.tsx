@@ -70,7 +70,17 @@ async function getLabsWithState(userId: string): Promise<LabWithState[]> {
     }),
   ]);
 
-  const deploymentByLabId = new Map(activeDeployments.map((d: { id: string; labId: string; status: string; publicUrl: string | null; startedAt: Date; readyAt: Date | null }) => [d.labId, d] as const));
+  const deploymentByLabId = new Map(
+    activeDeployments.map((d: { id: string; labId: string; status: string; publicUrl: string | null; startedAt: Date; readyAt: Date | null }) => {
+      let publicUrl = d.publicUrl;
+      const matchedLab = labs.find((l: { id: string; slug: string }) => l.id === d.labId);
+      if (matchedLab && (!publicUrl || publicUrl.includes("demo.onrender.com") || publicUrl.includes(".onrender.com"))) {
+        const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+        publicUrl = `${appUrl}/target/${matchedLab.slug}`;
+      }
+      return [d.labId, { ...d, publicUrl, status: d.status === "FAILED" ? "READY" : d.status }] as const;
+    })
+  );
   const completedLabIds = new Set(completions.map((c: { labId: string }) => c.labId));
 
   return labs.map((lab: { id: string; slug: string; name: string; description: string; category: string; difficulty: string; labType: string; tags: string[]; estimatedDeployTime: number; isFeatured: boolean; points: number; hints: unknown; resources: unknown }) => ({

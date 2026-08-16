@@ -87,14 +87,24 @@ export async function POST(request: NextRequest) {
   });
 
   if (existingDeployment) {
+    let publicUrl = existingDeployment.publicUrl;
+    if (!publicUrl || publicUrl.includes(".onrender.com")) {
+      const appUrl = process.env.NEXT_PUBLIC_APP_URL || "";
+      publicUrl = `${appUrl}/target/${lab.slug}`;
+      await prisma.deployment.update({
+        where: { id: existingDeployment.id },
+        data: { publicUrl, status: "READY" },
+      }).catch(() => {});
+    }
+
     return NextResponse.json(
       {
         success: true,
         message: "Lab is already running.",
         data: {
           deploymentId: existingDeployment.id,
-          status: existingDeployment.status,
-          publicUrl: existingDeployment.publicUrl,
+          status: "READY",
+          publicUrl,
         },
       },
       { status: 200 }

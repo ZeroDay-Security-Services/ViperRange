@@ -17,6 +17,7 @@ import {
   Flag,
 } from "lucide-react";
 import { ChallengeModal } from "@/components/labs/challenge-modal";
+import { FlagSubmitModal } from "@/components/labs/flag-submit-modal";
 import {
   getDifficultyColor,
   getStatusColor,
@@ -94,6 +95,7 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [pollingId, setPollingId] = useState<ReturnType<typeof setInterval> | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [flagModalOpen, setFlagModalOpen] = useState(false);
   const [completed, setCompleted] = useState(isCompleted);
 
   const startPolling = useCallback((deploymentId: string) => {
@@ -358,9 +360,9 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
                   )}
                 </button>
                 <button
-                  onClick={() => setModalOpen(true)}
+                  onClick={() => setFlagModalOpen(true)}
                   className="flex items-center justify-center gap-1.5 bg-surface hover:bg-surface-light border border-white/10 hover:border-white/20 text-foreground text-xs font-medium py-2.5 px-3 rounded-lg transition-all duration-200"
-                  title="Submit Flag or View Briefing"
+                  title="Submit Flag"
                 >
                   <Flag className="w-3.5 h-3.5 text-primary" />
                   <span>Submit Flag</span>
@@ -369,7 +371,7 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
             ) : (
               <>
                 <button
-                  onClick={() => setModalOpen(true)}
+                  onClick={() => setFlagModalOpen(true)}
                   className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white text-xs font-semibold py-2.5 px-3 rounded-lg transition-all duration-200 hover:shadow-glow-primary"
                 >
                   <Flag className="w-3.5 h-3.5" />
@@ -410,7 +412,7 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
                 {OFFLINE_ACTION_LABEL[lab.category] ?? "Open Challenge"}
               </button>
               <button
-                onClick={() => setModalOpen(true)}
+                onClick={() => setFlagModalOpen(true)}
                 className="flex items-center justify-center gap-1.5 bg-surface hover:bg-surface-light border border-white/10 hover:border-white/20 text-foreground text-xs font-medium py-2.5 px-3 rounded-lg transition-all duration-200"
                 title="Submit Flag"
               >
@@ -434,6 +436,19 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
           hints={lab.hints ?? []}
           resources={lab.resources ?? []}
           onClose={() => setModalOpen(false)}
+          onCompleted={() => setCompleted(true)}
+        />
+      )}
+
+      {flagModalOpen && (
+        <FlagSubmitModal
+          slug={lab.slug}
+          name={lab.name}
+          category={lab.category}
+          difficulty={lab.difficulty}
+          points={lab.points}
+          isCompleted={completed}
+          onClose={() => setFlagModalOpen(false)}
           onCompleted={() => setCompleted(true)}
         />
       )}
