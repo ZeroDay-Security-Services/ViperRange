@@ -204,19 +204,6 @@ export function ChallengeModal({
               </div>
             )}
           </div>
-
-          {/* Footer — flag submission */}
-          <div className="p-5 border-t border-white/10 shrink-0">
-            <div className="text-xs font-mono text-muted-foreground uppercase tracking-wider mb-2.5">
-              {actionLabel} — Submit Flag
-            </div>
-            <FlagSubmit
-              slug={slug}
-              isCompleted={isCompleted}
-              pointsAvailable={points}
-              onCompleted={onCompleted}
-            />
-          </div>
         </div>
       </div>
     </>
