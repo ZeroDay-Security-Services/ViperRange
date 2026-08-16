@@ -170,10 +170,19 @@ export async function POST(request: NextRequest) {
     },
   });
 
-  // ── Trigger async deployment (non-blocking) ───────────────────────────────
-  triggerDeployment(deployment.id, lab.slug, lab.name, lab.dockerImage, lab.port ?? 3000, request).catch(
-    (err) => console.error("[StartLab] Background deploy error:", err)
+  // Await deployment in serverless environment
+  await triggerDeployment(
+    deployment.id,
+    lab.slug,
+    lab.name,
+    lab.dockerImage,
+    lab.port ?? 3000,
+    request
   );
+
+  const finalDeployment = await prisma.deployment.findUnique({
+    where: { id: deployment.id },
+  });
 
   await auditLog({
     userId,
@@ -187,14 +196,14 @@ export async function POST(request: NextRequest) {
   return NextResponse.json(
     {
       success: true,
-      message: "Lab deployment queued.",
+      message: "Lab deployment initiated.",
       data: {
         deploymentId: deployment.id,
-        status: "QUEUED",
-        publicUrl: null,
+        status: finalDeployment?.status ?? "WARMING",
+        publicUrl: finalDeployment?.publicUrl ?? null,
       },
     },
-    { status: 202 }
+    { status: 200 }
   );
 }
 
