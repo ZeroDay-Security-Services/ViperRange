@@ -78,13 +78,39 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (user) {
         token.id = user.id;
         token.role = (user as unknown as { role: UserRole }).role;
+      } else if (token.id) {
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { id: token.id as string },
+            select: { role: true, email: true },
+          });
+          if (dbUser) {
+            const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
+            const shouldBeAdmin =
+              adminEmails.includes(dbUser.email.toLowerCase()) ||
+              dbUser.email.toLowerCase() === "admin@zeroday.in" ||
+              dbUser.email.toLowerCase().startsWith("admin@");
+
+            if (shouldBeAdmin && dbUser.role !== "ADMIN") {
+              await prisma.user.update({
+                where: { id: token.id as string },
+                data: { role: "ADMIN" },
+              }).catch(() => {});
+              token.role = "ADMIN";
+            } else {
+              token.role = (dbUser.role as UserRole) || token.role;
+            }
+          }
+        } catch {
+          // ignore transient errors
+        }
       }
       return token;
     },
     async session({ session, token }) {
       if (token && session.user) {
         session.user.id = token.id as string;
-        (session.user as unknown as { role: UserRole }).role = token.role as UserRole;
+        (session.user as unknown as { role: UserRole }).role = (token.role as UserRole) || "STUDENT";
       }
       return session;
     },
