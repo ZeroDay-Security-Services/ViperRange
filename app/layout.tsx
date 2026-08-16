@@ -7,27 +7,18 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { AuthProvider } from "@/components/auth/auth-provider";
 
+function getMetadataBase(): URL {
+  const raw = process.env.NEXT_PUBLIC_APP_URL || process.env.VERCEL_URL || "https://viper-range.vercel.app";
+  try {
+    const formatted = raw.startsWith("http") ? raw : `https://${raw}`;
+    return new URL(formatted);
+  } catch {
+    return new URL("https://viper-range.vercel.app");
+  }
+}
+
 export const metadata: Metadata = {
-  title: {
-    default: "ViperRange — Ephemeral Cyber Labs",
-    template: "%s | ViperRange",
-  },
-  description:
-    "Enterprise-grade cyber range platform by ZeroDay Security Services. Launch isolated vulnerable labs on demand, attack legally, learn practically.",
-  keywords: [
-    "cyber range",
-    "penetration testing",
-    "security training",
-    "OWASP",
-    "ethical hacking",
-    "ZeroDay Security Services",
-  ],
-  authors: [{ name: "ZeroDay Security Services", url: "https://zeroday.in" }],
-  creator: "ZeroDay Security Services",
-  publisher: "ZeroDay Security Services",
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000"
-  ),
+  metadataBase: getMetadataBase(),
   openGraph: {
     title: "ViperRange — Ephemeral Cyber Labs",
     description:
