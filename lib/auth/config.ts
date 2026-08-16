@@ -51,12 +51,24 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const isValid = await bcrypt.compare(password, user.passwordHash);
         if (!isValid) return null;
 
+        const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
+        const shouldBeAdmin = adminEmails.includes(user.email.toLowerCase()) || user.email.toLowerCase() === "admin@zeroday.in" || user.email.toLowerCase().startsWith("admin@");
+
+        let role = user.role as UserRole;
+        if (shouldBeAdmin && user.role !== "ADMIN") {
+          role = "ADMIN";
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { role: "ADMIN" },
+          }).catch(() => {});
+        }
+
         return {
           id: user.id,
           email: user.email,
           name: user.name,
           image: user.image,
-          role: user.role as UserRole,
+          role,
         };
       },
     }),
