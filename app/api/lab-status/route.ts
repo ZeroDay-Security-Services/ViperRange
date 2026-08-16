@@ -9,14 +9,17 @@ import type { DeploymentStatus } from "@/types";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { deploymentId?: string } }
+  context?: { params?: { deploymentId?: string } }
 ) {
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ success: false, error: "Authentication required." }, { status: 401 });
   }
 
-  const deploymentId = params.deploymentId ?? request.nextUrl.searchParams.get("deploymentId");
+  const deploymentId =
+    context?.params?.deploymentId ??
+    request.nextUrl.searchParams.get("deploymentId");
+
   if (!deploymentId) {
     return NextResponse.json({ success: false, error: "deploymentId is required." }, { status: 400 });
   }
