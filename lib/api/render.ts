@@ -167,6 +167,8 @@ export async function createOrDeployLabService(
     await new Promise((resolve) => setTimeout(resolve, 500));
     const mock = getMockDeployment(options.labSlug, options.labName);
     return { ...mock, isDev: true };
+  }
+
   if (!RENDER_OWNER_ID) {
     const mock = getMockDeployment(options.labSlug, options.labName);
     return { ...mock, isDev: true };
