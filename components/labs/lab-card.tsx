@@ -14,6 +14,7 @@ import {
   FolderOpen,
   Eye,
   Trophy,
+  Flag,
 } from "lucide-react";
 import { ChallengeModal } from "@/components/labs/challenge-modal";
 import {
@@ -341,26 +342,43 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
         </div>
 
         {/* Actions */}
-        <div className="p-4 border-t border-white/5 flex gap-2">
+        <div className="p-4 border-t border-white/5 flex flex-wrap gap-2">
           {isDeployable ? (
             !deployment || deployment.status === "STOPPED" || deployment.status === "FAILED" ? (
-              <button
-                onClick={handleStart}
-                disabled={isBusy}
-                className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold py-2.5 px-3 rounded-lg transition-all duration-200 hover:shadow-glow-primary"
-              >
-                {actionState === "starting" ? (
-                  <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Starting...</>
-                ) : (
-                  <><Play className="w-3.5 h-3.5" /> Start Lab</>
-                )}
-              </button>
+              <>
+                <button
+                  onClick={handleStart}
+                  disabled={isBusy}
+                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark disabled:opacity-50 disabled:cursor-not-allowed text-white text-xs font-semibold py-2.5 px-3 rounded-lg transition-all duration-200 hover:shadow-glow-primary"
+                >
+                  {actionState === "starting" ? (
+                    <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Starting...</>
+                  ) : (
+                    <><Play className="w-3.5 h-3.5" /> Start Lab</>
+                  )}
+                </button>
+                <button
+                  onClick={() => setModalOpen(true)}
+                  className="flex items-center justify-center gap-1.5 bg-surface hover:bg-surface-light border border-white/10 hover:border-white/20 text-foreground text-xs font-medium py-2.5 px-3 rounded-lg transition-all duration-200"
+                  title="Submit Flag or View Briefing"
+                >
+                  <Flag className="w-3.5 h-3.5 text-primary" />
+                  <span>Submit Flag</span>
+                </button>
+              </>
             ) : (
               <>
                 <button
+                  onClick={() => setModalOpen(true)}
+                  className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white text-xs font-semibold py-2.5 px-3 rounded-lg transition-all duration-200 hover:shadow-glow-primary"
+                >
+                  <Flag className="w-3.5 h-3.5" />
+                  <span>Submit Flag</span>
+                </button>
+                <button
                   onClick={handleStop}
                   disabled={isBusy}
-                  className="flex-1 flex items-center justify-center gap-2 bg-surface hover:bg-surface-light border border-white/10 hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-foreground text-xs font-medium py-2.5 px-3 rounded-lg transition-all duration-200"
+                  className="flex items-center justify-center gap-1.5 bg-surface hover:bg-surface-light border border-white/10 hover:border-white/20 disabled:opacity-50 disabled:cursor-not-allowed text-foreground text-xs font-medium py-2.5 px-3 rounded-lg transition-all duration-200"
                 >
                   {actionState === "stopping" ? (
                     <><Loader2 className="w-3.5 h-3.5 animate-spin" /> Stopping...</>
