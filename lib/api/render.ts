@@ -27,7 +27,8 @@ export function getLocalLabUrl(labSlug: string): string {
   if (isLocalLabs && LOCAL_LAB_PORTS[labSlug]) {
     return `${baseUrl}:${LOCAL_LAB_PORTS[labSlug]}`;
   }
-  return `https://${labSlug}-demo.onrender.com`;
+  const appUrl = process.env.NEXT_PUBLIC_APP_URL || "https://viper-range.vercel.app";
+  return `${appUrl}/target/${labSlug}`;
 }
 
 function mockServiceId(labSlug: string): string {
