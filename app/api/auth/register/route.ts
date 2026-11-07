@@ -77,8 +77,11 @@ export async function POST(request: NextRequest) {
     const rounds = parseInt(process.env.BCRYPT_ROUNDS ?? "12", 10);
     const passwordHash = await bcrypt.hash(password, rounds);
 
-    const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
-    const role = (adminEmails.includes(email) || email === "admin@zeroday.in" || email.startsWith("admin@")) ? "ADMIN" : "STUDENT";
+    const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+    const role = adminEmails.includes(email) ? "ADMIN" : "STUDENT";
 
     const user = await prisma.user.create({
       data: { name, email, passwordHash, role },

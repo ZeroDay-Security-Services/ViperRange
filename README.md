@@ -22,7 +22,7 @@
 
 **ViperRange** is a production-ready, full-stack cyber security training and range platform designed for offensive security research, red team training, and CTF competitions. 
 
-It provides an enterprise web platform paired with **39 original, realistic hands-on challenges** spanning Web Exploitation, Cryptography, Digital Forensics, Linux Privilege Escalation, Binary Exploitation (Pwn), Reverse Engineering, and Open-Source Intelligence (OSINT).
+It provides an enterprise web platform paired with **50 original, realistic hands-on challenges** spanning Web Exploitation, API Security, Network, Cryptography, Digital Forensics, Linux Privilege Escalation, Binary Exploitation (Pwn), Reverse Engineering, Open-Source Intelligence (OSINT) and Miscellaneous — 5 labs in each of 10 domains, tiered from beginner (L1) to expert (L6).
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -45,7 +45,7 @@ It provides an enterprise web platform paired with **39 original, realistic hand
 │   ┌─────────────────────────────┐   ┌─────────────────────────────┐    │
 │   │ PostgreSQL Database         │   │ Target Range Infrastructure │    │
 │   │ ├── Users & Profiles        │   │ ├── Docker Bridge Network   │    │
-│   │ ├── 39 Lab Scenarios        │   │ ├── 8 Deployable Containers │    │
+│   │ ├── 50 Lab Scenarios        │   │ ├── 8 Deployable Containers │    │
 │   │ ├── Submissions & Flags     │   │ └── On-Demand Ephemeral Pods│    │
 │   │ └── Real-time Telemetry     │   │                             │    │
 │   └─────────────────────────────┘   └─────────────────────────────┘    │
@@ -55,50 +55,60 @@ It provides an enterprise web platform paired with **39 original, realistic hand
 
 ---
 
-## 🎯 Lab & Challenge Ecosystem (39 Modules)
+## 🎯 Lab & Challenge Ecosystem (50 Modules / 10 Domains)
 
-ViperRange features **39 unique, independently authored scenarios** categorized into dynamic deployable containers and downloadable offline challenges:
+ViperRange features **50 unique, independently authored scenarios** — exactly 5 per domain — each carrying a `VR-###` code, an objective, tooling hints, CWE/MITRE mapping and a remediation note.
 
-### 1. 🌐 Web Exploitation (8 Deployable Docker Targets)
-Each lab deploys into an isolated container running on designated ports:
-* **File Oracle (`:8081`)** — Chained Local File Inclusion (LFI via `php://filter`) to Remote Code Execution.
-* **Pixel Cache (`:8082`)** — Information disclosure via generated stylesheet build metadata.
-* **Crawler Protocol (`:8083`)** — Search engine exclusion policy bypass and hidden archive traversal.
-* **Session Architect (`:8084`)** — Base64-encoded cookie manipulation and privilege escalation.
-* **Cipher Gate (`:8085`)** — Client-side JavaScript array rotation and string obfuscation deconstruction.
-* **Loose Types (`:8086`)** — PHP `extract($_GET)` variable injection and execution override.
-* **Template Engine (`:8087`)** — Python Tornado Server-Side Template Injection (SSTI) and HMAC cookie signing.
-* **Style Injector (`:8088`)** — CSS attribute-selector side-channel exfiltration and prefix binary search.
+### Difficulty tiers
 
-### 2. 🔐 Cryptography (7 Offline Challenges)
-* Wiener’s attack on small private exponent RSA.
-* Bit-shifting arithmetic and substitution cipher analysis.
-* AES-CBC initialization vector nonce reuse and key reconstruction.
-* Discrete logarithm computation and Diffie-Hellman parameter flaws.
+| Tier | Labs | Typical profile |
+|---|---|---|
+| **L1 — Beginner** | 8 | Single obvious flaw, one tool |
+| **L2 — Beginner+** | 10 | One flaw plus a small pivot |
+| **L3 — Intermediate** | 12 | Chained weakness, tool fluency expected |
+| **L4 — Intermediate+** | 10 | Multi-stage exploitation, custom payloads |
+| **L5 — Advanced** | 7 | Realistic constraints, bypassing controls |
+| **L6 — Expert** | 3 | Full chain research, long-form analysis |
 
-### 3. 🔍 Digital Forensics & Analysis (5 Offline Challenges)
-* PCAP network stream packet carving and raw protocol extraction.
-* Volatility memory dump analysis, process tree reconstruction, and mutex extraction.
-* LSB Steganography and metadata carving across multi-layer media.
+### 1. 🌐 Web Exploitation (5) + 3 Deployable Misc Targets
+Deployable container labs (ports `:8081`–`:8088`) now split by technique rather than all sitting under web:
+* **Web Exploitation** — File Oracle (`:8081`, LFI→RCE), Session Architect (`:8084`, cookie forging), Cipher Gate (`:8085`, client-side obfuscation), Loose Types (`:8086`, `extract()` injection), Template Engine (`:8087`, SSTI→cookie forgery).
+* **Miscellaneous** — Pixel Cache (`:8082`, build-metadata disclosure), Crawler Protocol (`:8083`, `robots.txt` enumeration), Style Injector (`:8088`, CSS side-channel exfiltration), plus Eval Escape and Voice Inject.
 
-### 4. 🐧 Linux Internals & Privilege Escalation (3 Offline Challenges)
-* SUID binary path hijacking and environment variable manipulation.
-* Wildcard injection attacks against automated administrative cron jobs.
-* Writable systemd service units and Linux permission auditing.
+### 2. 🛰️ API Security (5)
+* **Object Vault** — broken object level authorisation across tenants.
+* **Field Injection** — mass assignment to `role: instructor`.
+* **Schema Whisper** — GraphQL introspection to a deprecated, unauthorised query.
+* **Algorithm Confusion** — JWT RS256/HS256 confusion to forge an admin token.
+* **Webhook Relay** — SSRF blocklist bypass into cloud metadata credentials.
 
-### 5. 💥 Binary Exploitation (6 Offline Challenges)
-* Stack buffer overflow and instruction pointer control (`ret2win`).
-* Format string vulnerabilities and arbitrary memory read/write primitives.
-* ROP (Return-Oriented Programming) chain construction and NX bypass.
+### 3. 📡 Network (5)
+* **Zone Transfer** — unauthenticated DNS AXFR zone dump.
+* **Anonymous Drop** — anonymous FTP share enumeration.
+* **Share Sweep** — SMB null-session enumeration to an over-permissioned share.
+* **Poisoned Arp** — ARP cache poisoning with plaintext credential capture.
+* **Silent Pivot** — SOCKS pivot through a dual-homed foothold.
 
-### 6. ⚙ Reverse Engineering (5 Offline Challenges)
-* Keygen matrix reversing and assembly deobfuscation.
-* Bytecode disassembly and anti-debugging evasion.
-* Packed executable analysis and runtime binary reconstruction.
+### 4. 🔐 Cryptography (5)
+* Wiener’s attack on a small private exponent, Håstad broadcast with e=3, CBC bit-flipping malleability, repeating-key XOR with decoy padding, and a partially documented Enigma configuration.
 
-### 7. 📡 Synthetic OSINT & Misc (5 Challenges)
-* Completely synthetic, privacy-safe intelligence trails and digital artifact correlation.
-* Custom esoteric VM architectures and Git history vulnerability extraction.
+### 5. 🔍 Digital Forensics (5)
+* Appended-archive carving, LSB steganography (including a Braille-encoded payload), hex delta between near-identical plates, password-protected archives, and a multi-layer LSB→audio→whitespace chain.
+
+### 6. 🐧 Linux Privilege Escalation (5)
+* Alias-shadowed restricted shell, file-tree hunting, chroot breakout, SUID PATH hijacking, and `CAP_SYS_ADMIN` mount abuse.
+
+### 7. 💥 Binary Exploitation (5)
+* Adjacent-integer overwrite, exact-length overflow, `ret2win`, format-string arbitrary write, and `strcpy` ret2libc.
+
+### 8. ⚙ Reverse Engineering (5)
+* Combinatorial validator automation, staged Caesar/XOR/permutation chains, Python bytecode reconstruction, compiled arithmetic checkers, and a five-stage expert scramble.
+
+### 9. 🔍 OSINT (5)
+* All personas are fictional and synthetic: social pivot, archival photo forensics, movement correlation, username→email-pattern pivot, and skyline geolocation.
+
+### Deprecated in v2
+`factor-hunt` (covered by Narrow Key), `hill-descent` (covered by Chinese Broadcast) and `stack-flood` (covered by Overflow Zero/One) were retired so each domain holds exactly five labs.
 
 ---
 
@@ -149,7 +159,7 @@ Launch the entire platform (Next.js Application + PostgreSQL + 8 Vulnerable Targ
 # 1. Start core platform and database
 docker compose up -d --build
 
-# 2. Synchronize database schema and seed all 39 labs
+# 2. Synchronize database schema and seed all 50 labs
 docker compose exec app npx prisma db push
 docker compose exec app node prisma/seed.js
 
@@ -160,6 +170,35 @@ docker compose -f docker-compose.labs.yml up -d --build
 Access the live services:
 - **ViperRange Platform**: `http://localhost:3001`
 - **Target Labs**: Ports `8081` through `8088`
+
+### 4. Deploying to Render (Docker runtime)
+
+This repository ships a `Dockerfile` and a `render.yaml`. The service builds with the
+Dockerfile, so **the schema is not applied automatically** — the database must be
+initialised once:
+
+```bash
+# `prisma/migrations/` does not exist yet, so use db push rather than migrate deploy
+DATABASE_URL="postgresql://user:pass@host:5432/viperrange?sslmode=require" npx prisma db push
+DATABASE_URL="postgresql://user:pass@host:5432/viperrange?sslmode=require" npm run db:seed
+```
+
+Required environment variables:
+
+| Variable | Notes |
+|---|---|
+| `DATABASE_URL` | Render **Internal** URL for a same-region service (no `sslmode`); external URLs need `?sslmode=require` |
+| `AUTH_SECRET` | `openssl rand -base64 32` |
+| `AUTH_URL` / `NEXT_PUBLIC_APP_URL` | Exact public origin, no trailing slash |
+| `ADMIN_EMAILS` | Comma-separated; **the only** path to the ADMIN role |
+| `LOCAL_LABS_ENABLED` | `false` on hosted platforms — Render cannot run the Docker lab targets |
+
+Seeded accounts (change the passwords immediately on any shared deployment):
+
+| Email | Password | Role |
+|---|---|---|
+| `admin@zeroday.in` | `Admin@ZeroDay2024!` | ADMIN |
+| `student@demo.com` | `Student@Demo2024!` | STUDENT |
 
 ---
 
@@ -208,11 +247,17 @@ viperrange/
 
 ## 🧪 Testing & Validation
 
-Run the automated integration and validation test suites:
-
 ```bash
 # Run unit and API tests
 npm test
+
+# Type-check and production build
+npm run type-check && npm run build
+
+# Generate challenge artifacts for the offline labs, then prove each flag is
+# recoverable from the published file alone (exit 0 = every solver matched)
+python scripts/labforge/build_artifacts.py
+python scripts/labforge/verify_artifacts.py
 
 # Run offline labs flag validation audit
 node scripts/test-offline-labs.js
@@ -220,6 +265,22 @@ node scripts/test-offline-labs.js
 # Run live deployable containers health audit
 node scripts/test-online-labs.js
 ```
+
+### Artifact forge & playability status
+
+`scripts/labforge/` generates deterministic challenge files into `public/artifacts/<slug>/`
+with a SHA-256 manifest, and `prisma/seed.js` attaches them to each lab as downloadable
+resources. Artifacts are reproducible: the RNG is seeded from the lab slug.
+
+| Status | Labs | Meaning |
+|---|---|---|
+| **Solver-verified** | 8 | `verify_artifacts.py` recovers the exact flag from the artifact alone (masked-xor, narrow-key, chinese-broadcast, binary-carve, braille-cipher, hex-delta, deep-grep, multi-layer). |
+| **Pending — needs live service** | 27 | Technique is reproducible but the solve needs the lab's container/API/network target running; not claimed as verified. |
+| **Pending — needs native toolchain** | 15 | Needs gcc+gdb ELF builds, PHP, tshark, steghide/john or an audio toolchain that this repo does not ship headlessly. |
+
+`verify_artifacts.py` prints every pending lab with its blocking reason and exits non-zero
+if any forged artifact fails to solve — a lab is never reported as playable on the basis
+of existing.
 
 ---
 

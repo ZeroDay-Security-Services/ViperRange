@@ -1,0 +1,93 @@
+{
+  "generated": [
+    "masked-xor",
+    "narrow-key",
+    "chinese-broadcast",
+    "binary-carve",
+    "braille-cipher",
+    "hex-delta",
+    "deep-grep",
+    "multi-layer"
+  ],
+  "labs": {
+    "binary-carve": [
+      {
+        "name": "exhibit.png",
+        "path": "artifacts/binary-carve/exhibit.png",
+        "sha256": "b56ee068c7122bf68001d685bb00d38b02ec390f0446c5c4e48df622b3c0f814",
+        "size": 28156,
+        "url": "/artifacts/binary-carve/exhibit.png"
+      }
+    ],
+    "braille-cipher": [
+      {
+        "name": "plate.png",
+        "path": "artifacts/braille-cipher/plate.png",
+        "sha256": "daef64f54b7553a9affbf1808feb25191419025769db96cf2ae70cc469515cc1",
+        "size": 49363,
+        "url": "/artifacts/braille-cipher/plate.png"
+      }
+    ],
+    "chinese-broadcast": [
+      {
+        "name": "broadcast.json",
+        "path": "artifacts/chinese-broadcast/broadcast.json",
+        "sha256": "c8027bc40f59c69433c412f65d08d0104e37bd16115c9bc8745ecb308d0da5ad",
+        "size": 1788,
+        "url": "/artifacts/chinese-broadcast/broadcast.json"
+      }
+    ],
+    "deep-grep": [
+      {
+        "name": "sessions.zip",
+        "path": "artifacts/deep-grep/sessions.zip",
+        "sha256": "0151bb6d402036e5aed1aa0a6f02cdb3b951029ced28a4776d1ec125c367fd0f",
+        "size": 21989,
+        "url": "/artifacts/deep-grep/sessions.zip"
+      }
+    ],
+    "hex-delta": [
+      {
+        "name": "plates.zip",
+        "path": "artifacts/hex-delta/plates.zip",
+        "sha256": "afbe62d3e88a8bfdaaa219a8f957cb4c2f273e33c66d65ae221741140be6d6f4",
+        "size": 25209,
+        "url": "/artifacts/hex-delta/plates.zip"
+      }
+    ],
+    "masked-xor": [
+      {
+        "name": "intercept.txt",
+        "path": "artifacts/masked-xor/intercept.txt",
+        "sha256": "c2748e362486e58c086138cff48afe7cb8c40a3810879f1d7c6501a150ae6851",
+        "size": 256,
+        "url": "/artifacts/masked-xor/intercept.txt"
+      }
+    ],
+    "multi-layer": [
+      {
+        "name": "encode.py",
+        "path": "artifacts/multi-layer/encode.py",
+        "sha256": "d0a3fcf3f20ecc24236b5a41cfd26c93ff6a8787b0d42265a13f11071c8bb242",
+        "size": 793,
+        "url": "/artifacts/multi-layer/encode.py"
+      },
+      {
+        "name": "ciphertext.txt",
+        "path": "artifacts/multi-layer/ciphertext.txt",
+        "sha256": "e40d908d828f99eca748af4dc21c6c0444df4c0568efd10c66ba2fd0d4181abd",
+        "size": 28,
+        "url": "/artifacts/multi-layer/ciphertext.txt"
+      }
+    ],
+    "narrow-key": [
+      {
+        "name": "intercept.json",
+        "path": "artifacts/narrow-key/intercept.json",
+        "sha256": "783ba0e924608a1685af619791fecfed7d9679e5e0dade42bbf919cf7b06e9cc",
+        "size": 637,
+        "url": "/artifacts/narrow-key/intercept.json"
+      }
+    ]
+  }
+}

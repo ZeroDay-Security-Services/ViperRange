@@ -16,8 +16,12 @@ async function getProfile(userId: string) {
   });
 
   if (user) {
-    const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
-    const shouldBeAdmin = adminEmails.includes(user.email.toLowerCase()) || user.email.toLowerCase() === "admin@zeroday.in" || user.email.toLowerCase().startsWith("admin@");
+    const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+      .split(",")
+      .map((e) => e.trim().toLowerCase())
+      .filter(Boolean);
+    // Only explicitly configured admin addresses are granted ADMIN.
+    const shouldBeAdmin = adminEmails.includes(user.email.toLowerCase());
     if (shouldBeAdmin && user.role !== "ADMIN") {
       user = await prisma.user.update({
         where: { id: userId },

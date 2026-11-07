@@ -1,13 +1,29 @@
 // ViperRange — Database Seed
 // ZeroDay Security Services
 //
-// All 39 labs below are original ViperRange training environments.
+// 50 labs: 36 original ViperRange training environments plus 14 v2 additions.
+// Catalog composition (deprecations, remaps, L1-L6 tiers, new labs) lives in
+// ./labs-v2.js so both this seed and the arena stay in sync.
 // Every scenario, flag, and walkthrough was independently authored for
 // this platform. Flags are stored as SHA-256 hashes — never plaintext.
 
 const { PrismaClient } = require("@prisma/client");
 const bcrypt = require("bcryptjs");
 const crypto = require("crypto");
+const fs = require("fs");
+const path = require("path");
+
+// Artifact manifest produced by `python scripts/labforge/build_artifacts.py`.
+// Optional: labs without generated files simply ship no downloads.
+let ARTIFACT_MANIFEST = {};
+try {
+  const manifestPath = path.join(__dirname, "..", "public", "artifacts", "manifest.json");
+  ARTIFACT_MANIFEST = JSON.parse(fs.readFileSync(manifestPath, "utf8")).labs ?? {};
+} catch {
+  ARTIFACT_MANIFEST = {};
+}
+
+const { DEPRECATED, REMAP, META, NEW_LABS, CODE_ORDER } = require("./labs-v2.js");
 
 const prisma = new PrismaClient();
 
@@ -2078,6 +2094,49 @@ The flag combines the fictional photographer's surname with the identified remov
   },
 ];
 
+// ── v2 catalog merge ─────────────────────────────────────────────────────────
+// 36 surviving original labs (re-tiered to L1–L6, 3 category corrections)
+// plus 14 new labs = 50 labs across 10 categories.
+const codeFor = (slug) => {
+  const i = CODE_ORDER.indexOf(slug);
+  return i >= 0 ? `VR-${String(i + 1).padStart(3, "0")}` : undefined;
+};
+
+const V2_LABS = [
+  ...LABS.filter((lab) => !DEPRECATED.includes(lab.slug)).map((lab) => {
+    const meta = META[lab.slug] ?? {};
+    return {
+      ...lab,
+      category: REMAP[lab.slug] ?? lab.category,
+      code: codeFor(lab.slug),
+      difficultyLevel: meta.level ?? 1,
+      objective: meta.objective ?? null,
+      prerequisites: meta.prerequisites ?? [],
+      tools: meta.tools ?? [],
+      mitigation: meta.mitigation ?? null,
+      cwe: meta.cwe ?? null,
+      mitre: meta.mitre ?? null,
+      artifacts: ARTIFACT_MANIFEST[lab.slug] ?? [],
+      resources: [
+        ...(lab.resources ?? []),
+        ...(ARTIFACT_MANIFEST[lab.slug] ?? []).map((artifact) => ({
+          name: artifact.name,
+          description: `Challenge artifact - SHA-256 ${artifact.sha256.slice(0, 16)}...`,
+          url: artifact.url,
+        })),
+      ],
+    };
+  }),
+  ...NEW_LABS.map(({ level, ...lab }) => ({
+    ...lab,
+    difficultyLevel: level,
+    prerequisites: lab.prerequisites ?? [],
+    resources: lab.resources ?? [],
+    isFeatured: false,
+    artifacts: ARTIFACT_MANIFEST[lab.slug] ?? [],
+  })),
+];
+
 async function main() {
   console.log("🌱 Seeding ViperRange database...");
 
@@ -2109,8 +2168,14 @@ async function main() {
   });
   console.log("Demo student ready:", student.email);
 
+  // ── Deprecated labs (v2) ──────────────────────────────────────────────────
+  if (DEPRECATED.length > 0) {
+    const removed = await prisma.lab.deleteMany({ where: { slug: { in: DEPRECATED } } });
+    if (removed.count > 0) console.log(`Removed ${removed.count} deprecated lab(s).`);
+  }
+
   // ── Labs ───────────────────────────────────────────────────────────────────
-  for (const labDef of LABS) {
+  for (const labDef of V2_LABS) {
     const { flag, walkthroughs, hints, resources, ...labFields } = labDef;
 
     const lab = await prisma.lab.upsert({
@@ -2146,7 +2211,7 @@ async function main() {
     console.log(`Lab ready: ${lab.name} [${lab.category}/${lab.labType}]`);
   }
 
-  console.log(`✅ Seeded ${LABS.length} labs successfully.`);
+  console.log(`✅ Seeded ${V2_LABS.length} labs successfully.`);
 }
 
 main()

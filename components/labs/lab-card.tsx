@@ -79,6 +79,9 @@ const CATEGORY_ICON: Record<string, string> = {
   LINUX: "🐧",
   MISC: "🧩",
   WEB_APP: "🌐",
+  API: "🛰️",
+  NETWORK: "📡",
+  CLOUD: "☁️",
 };
 
 const OFFLINE_ACTION_LABEL: Record<string, string> = {

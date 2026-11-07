@@ -49,7 +49,7 @@ export default async function BillingPage() {
             <div className="space-y-3 mb-6">
               {[
                 "Up to 3 concurrent live container deployments",
-                "Access to all 39 standard & featured labs",
+                "Access to all 50 standard & featured labs",
                 "1-hour active session limit per deployable lab",
                 "Step-by-step walkthroughs & automated hints",
                 "Community Discord & platform documentation",

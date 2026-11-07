@@ -120,12 +120,23 @@ model VerificationToken {
 model Lab {
   id          String        @id @default(cuid())
   slug        String        @unique
+  code        String?       @unique
   name        String
   description String        @db.Text
   category    LabCategory
   difficulty  LabDifficulty
+  difficultyLevel Int      @default(1)
   labType     LabType       @default(DEPLOYABLE)
   tags        String[]
+
+  // Authoring metadata
+  objective     String?  @db.Text
+  prerequisites String[]
+  tools         String[]
+  mitigation    String?  @db.Text
+  cwe           String?
+  mitre         String?
+  artifacts     Json?
 
   // Deployable-lab fields (null for OFFLINE labs)
   dockerImage         String?

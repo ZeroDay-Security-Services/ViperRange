@@ -2102,11 +2102,20 @@ The flag combines the fictional photographer's surname with the identified remov
 ];
 
 
+// The 50-lab catalog is authored in prisma/seed.js + prisma/labs-v2.js. This
+// module holds the legacy 39-lab snapshot and must not write it: doing so would
+// re-introduce deprecated labs and the pre-v2 categories on an empty database.
 export async function ensureLabsSeeded() {
   try {
     const count = await prisma.lab.count();
     if (count > 0) return;
 
+    console.warn(
+      "[seed] Lab catalog is empty. Run `npm run db:seed` to load the 50-lab catalog."
+    );
+    return;
+
+    // eslint-disable-next-line no-unreachable
     console.log("🌱 Auto-seeding 39 ViperRange labs into database...");
 
     for (const labDef of LABS) {
@@ -2141,7 +2150,7 @@ export async function ensureLabsSeeded() {
         });
       }
     }
-    console.log("✅ Auto-seeded 39 labs successfully.");
+    console.log("✅ Auto-seeded labs successfully.");
   } catch (err) {
     console.error("⚠️ Auto-seed warning:", err);
   }

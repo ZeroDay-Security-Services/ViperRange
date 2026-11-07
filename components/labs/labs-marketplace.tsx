@@ -34,7 +34,7 @@ interface LabWithState {
 }
 
 const CATEGORIES = [
-  "ALL", "WEB_APP", "CRYPTO", "FORENSICS", "LINUX", "PWN", "REVERSING", "OSINT", "MISC",
+  "ALL", "WEB_APP", "API", "NETWORK", "CRYPTO", "FORENSICS", "LINUX", "PWN", "REVERSING", "OSINT", "MISC",
 ];
 
 export function LabsMarketplace({ labs }: { labs: LabWithState[] }) {

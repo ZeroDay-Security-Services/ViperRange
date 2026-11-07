@@ -51,8 +51,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         const isValid = await bcrypt.compare(password, user.passwordHash);
         if (!isValid) return null;
 
-        const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
-        const shouldBeAdmin = adminEmails.includes(user.email.toLowerCase()) || user.email.toLowerCase() === "admin@zeroday.in" || user.email.toLowerCase().startsWith("admin@");
+        const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+          .split(",")
+          .map((e) => e.trim().toLowerCase())
+          .filter(Boolean);
+        // Only explicitly configured admin addresses are granted ADMIN.
+        const shouldBeAdmin = adminEmails.includes(user.email.toLowerCase());
 
         let role = user.role as UserRole;
         if (shouldBeAdmin && user.role !== "ADMIN") {
@@ -85,11 +89,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             select: { role: true, email: true },
           });
           if (dbUser) {
-            const adminEmails = (process.env.ADMIN_EMAILS ?? "").split(",").map((e) => e.trim().toLowerCase());
-            const shouldBeAdmin =
-              adminEmails.includes(dbUser.email.toLowerCase()) ||
-              dbUser.email.toLowerCase() === "admin@zeroday.in" ||
-              dbUser.email.toLowerCase().startsWith("admin@");
+            const adminEmails = (process.env.ADMIN_EMAILS ?? "")
+              .split(",")
+              .map((e) => e.trim().toLowerCase())
+              .filter(Boolean);
+            // Only explicitly configured admin addresses are granted ADMIN.
+            const shouldBeAdmin = adminEmails.includes(dbUser.email.toLowerCase());
 
             if (shouldBeAdmin && dbUser.role !== "ADMIN") {
               await prisma.user.update({

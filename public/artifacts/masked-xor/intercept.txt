@@ -1,0 +1,4 @@
+# Intercepted fragment
+# Repeating-key XOR. A decoy '@' was inserted after every 7 ciphertext bytes.
+# Recover the key (hint: it is the codename in the brief), drop the decoys, XOR back.
+001b2b3d3d391a4029372d342c3c2c401a2a223b393522402e210635253524403c36

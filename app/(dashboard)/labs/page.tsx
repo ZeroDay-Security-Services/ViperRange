@@ -117,7 +117,7 @@ export default async function LabsPage() {
             </h2>
           </div>
           <p className="text-sm text-muted-foreground max-w-2xl">
-            39 tactical offensive challenges across 8 domains. Deploy live target containers or dissect offline forensic & binary artifacts to capture flags.
+            50 tactical offensive challenges across 10 domains. Deploy live target containers or dissect offline forensic & binary artifacts to capture flags.
           </p>
         </div>
       </div>

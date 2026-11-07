@@ -10,7 +10,7 @@ export const metadata: Metadata = { title: "Auth" };
 
 const FEATURES = [
   { icon: Zap, text: "Deploy isolated vulnerable environments in under 2 minutes" },
-  { icon: Flag, text: "39 hands-on labs across Web, Crypto, Pwn, Forensics, and more" },
+  { icon: Flag, text: "50 hands-on labs across Web, API, Network, Crypto, Pwn, Forensics, and more" },
   { icon: Trophy, text: "Earn points for every flag — track progress on the leaderboard" },
   { icon: Terminal, text: "Real-time attack telemetry streamed straight to your terminal" },
 ];
