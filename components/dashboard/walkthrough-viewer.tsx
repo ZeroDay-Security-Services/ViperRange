@@ -89,9 +89,10 @@ export function WalkthroughViewer({ walkthroughs }: { walkthroughs: WalkthroughE
   const ToolIcon = selected ? (TOOL_ICONS[selected.tool] ?? BookOpen) : BookOpen;
 
   return (
-    <div className="grid lg:grid-cols-[280px_1fr] gap-5">
-      {/* Sidebar */}
-      <div className="glass-card p-4 space-y-4 h-fit lg:sticky lg:top-20">
+    <div className="grid lg:grid-cols-[280px_1fr] gap-5 items-start">
+      {/* Sidebar — capped to the viewport so a long catalog scrolls inside the
+          card instead of stretching the page and stranding the reader pane. */}
+      <div className="glass-card p-4 space-y-4 h-fit max-h-[45vh] overflow-y-auto thin-scrollbar lg:sticky lg:top-20 lg:max-h-[calc(100vh-7rem)]">
         {Object.entries(byLab).map(([labName, wts]) => (
           <div key={labName}>
             <div className="text-[10px] font-mono text-muted-foreground uppercase tracking-widest px-2 mb-2">
@@ -124,8 +125,17 @@ export function WalkthroughViewer({ walkthroughs }: { walkthroughs: WalkthroughE
       </div>
 
       {/* Content */}
+      {!selected && (
+        <div className="glass-card p-16 text-center">
+          <BookOpen className="w-10 h-10 text-muted-foreground mx-auto mb-3" />
+          <p className="text-muted-foreground">
+            Select a walkthrough from the list to read it here.
+          </p>
+        </div>
+      )}
+
       {selected && (
-        <div className="glass-card overflow-hidden">
+        <div className="glass-card overflow-hidden lg:sticky lg:top-20">
           {/* Header */}
           <div className="p-6 border-b border-white/10">
             <div className="flex items-center gap-3 mb-3">
