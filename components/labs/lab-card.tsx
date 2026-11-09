@@ -15,6 +15,7 @@ import {
   Eye,
   Trophy,
   Flag,
+  Package,
 } from "lucide-react";
 import { ChallengeModal } from "@/components/labs/challenge-modal";
 import { FlagSubmitModal } from "@/components/labs/flag-submit-modal";
@@ -277,7 +278,9 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
             {lab.description}
           </p>
 
-          <div className="flex flex-wrap gap-1.5">
+          {/* Two tag rows are always reserved so one-line and two-line tag
+              sets keep neighbouring cards visually aligned. */}
+          <div className="flex flex-wrap content-start gap-1.5 min-h-[2.6rem]">
             {lab.tags.slice(0, 4).map((tag) => (
               <span
                 key={tag}
@@ -294,6 +297,15 @@ export function LabCard({ lab, activeDeployment: initialDeployment, isCompleted 
             <Trophy className="w-3 h-3" />
             {lab.points} points
           </div>
+
+          {/* Offline labs get a meta row of their own so every card in a row
+              shares the same rhythm instead of reserving a bare gap. */}
+          {!isDeployable && (
+            <div className="flex items-center gap-1.5 text-[10px] text-muted-foreground font-mono">
+              <Package className="w-3 h-3" />
+              {lab.resources?.length ? "Artifact pack included" : "No deployment needed"}
+            </div>
+          )}
 
           {isDeployable && (
             <>
